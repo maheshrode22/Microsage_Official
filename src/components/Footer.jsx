@@ -4,13 +4,6 @@ import { Link } from 'react-router-dom';
 import './Footer.css';
 
 const Footer = () => {
-  const scrollToSection = (sectionId) => {
-    const element = document.getElementById(sectionId);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
     <footer className="footer-section">
       <Container>
