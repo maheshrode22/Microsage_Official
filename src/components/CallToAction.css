@@ -1,0 +1,30 @@
+.cta-section {
+  background: #ffffff;
+}
+
+.cta-card .cta-title {
+  font-size: 1.15rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.cta-card .cta-text {
+  color: var(--text-light);
+  font-size: 0.98rem;
+  line-height: 1.6;
+  margin-bottom: 1rem;
+}
+
+.cta-outline {
+  border-radius: 8px;
+  padding: 10px 16px;
+  border: 1px solid var(--primary-color);
+  color: var(--primary-color);
+}
+
+.cta-outline:hover {
+  background: var(--primary-color);
+  color: #fff;
+}
+

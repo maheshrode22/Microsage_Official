@@ -1,0 +1,23 @@
+.testimonials-section {
+  background: #ffffff;
+}
+
+.testimonial-card .testimonial-quote {
+  font-size: 1.05rem;
+  line-height: 1.7;
+  color: var(--text-dark);
+  margin-bottom: 1.25rem;
+}
+
+.testimonial-name {
+  font-weight: 700;
+  margin: 0;
+  color: var(--text-dark);
+}
+
+.testimonial-role {
+  margin: 0;
+  color: var(--text-light);
+  font-size: 0.95rem;
+}
+
