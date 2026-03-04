@@ -9,7 +9,6 @@ import Products from './components/Products';
 import Contact from './components/Contact';
 import LearningTracks from './components/LearningTracks';
 import HowItWorks from './components/HowItWorks';
-import Testimonials from './components/Testimonials';
 import TrustPanel from './components/TrustPanel';
 import CallToAction from './components/CallToAction';
 import Career from './components/Career';
