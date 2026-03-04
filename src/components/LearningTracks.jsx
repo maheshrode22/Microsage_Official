@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
-import './LearningTracks.css';
+import '../styles/components/LearningTracks.css';
 
 const tracks = [
   {
@@ -31,7 +31,7 @@ const tracks = [
 
 const LearningTracks = () => (
   <section className="learning-tracks section-padding" id="tracks">
-    <Container>
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">Learning Tracks</h2>

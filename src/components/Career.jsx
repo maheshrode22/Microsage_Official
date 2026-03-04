@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Button } from 'react-bootstrap';
-import './Career.css';
+import '../styles/components/Career.css';
 
 const roles = [
   {
@@ -25,7 +25,7 @@ const roles = [
 
 const Career = () => (
   <section className="career-section section-padding">
-    <Container>
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">Careers</h2>
@@ -51,7 +51,7 @@ const Career = () => (
                 <div className="mt-auto">
                   <Button
                     className="btn-primary-custom w-100"
-                    href="mailto:microsagepl@gmail.com?subject=Career%20Application"
+                    href="mailto:info@gatetutor.in?subject=Career%20Application"
                   >
                     Apply Now
                   </Button>
@@ -71,7 +71,7 @@ const Career = () => (
             <Button
               variant="outline-primary"
               className="career-cta-btn"
-              href="mailto:microsagepl@gmail.com?subject=Open%20Application"
+              href="mailto:info@gatetutor.in?subject=Open%20Application"
             >
               Share Your Profile
             </Button>

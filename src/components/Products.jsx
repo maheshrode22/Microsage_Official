@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './Products.css';
+import '../styles/components/Products.css';
 
 const Products = () => {
   const products = [
@@ -33,13 +33,13 @@ const Products = () => {
 
   return (
     <section id="products" className="products-section section-padding">
-      <Container>
+      <Container fluid className="px-4 px-lg-5">
         <Row>
           <Col lg={12}>
             <h2 className="section-title">Our Products</h2>
             <p className="section-subtitle">
-              Innovative education technology solutions powered by AI. Our comprehensive 
-              product suite includes learning management systems, assessment platforms, and 
+              Innovative education technology solutions powered by AI. Our comprehensive
+              product suite includes learning management systems, assessment platforms, and
               recruitment solutions designed to transform how students learn and how companies hire.
             </p>
           </Col>
@@ -71,7 +71,7 @@ const Products = () => {
                           </p>
                         </div>
                       )}
-                      <a 
+                      <a
                         href={product.link}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -83,8 +83,8 @@ const Products = () => {
                     <Col lg={4} className="text-center mt-4 mt-lg-0">
                       <div className="product-visual">
                         <div className="product-image-wrapper">
-                          <img 
-                            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=600&fit=crop" 
+                          <img
+                            src="https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=600&h=600&fit=crop"
                             alt={product.title}
                             className="product-main-image"
                           />

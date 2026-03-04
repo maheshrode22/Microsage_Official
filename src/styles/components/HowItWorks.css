@@ -1,0 +1,31 @@
+.howitworks-section {
+  background: #f9fafb;
+}
+
+.how-card .how-step {
+  width: 42px;
+  height: 42px;
+  border-radius: 12px;
+  background: var(--primary-color);
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  margin-bottom: 0.75rem;
+}
+
+.how-card .how-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+}
+
+.how-card .how-text {
+  color: var(--text-light);
+  line-height: 1.6;
+  font-size: 0.98rem;
+  margin: 0;
+}
+

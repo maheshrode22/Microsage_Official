@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import './Stats.css';
+import '../styles/components/Stats.css';
 
 const StatCard = ({ stat, index }) => {
   const [count, setCount] = useState(0);
@@ -122,8 +122,8 @@ const Stats = () => {
   ];
 
   return (
-    <section className="stats-section section-padding" id="impact">
-      <Container>
+    <section id="stats" className="stats-section py-5">
+      <Container fluid className="px-4 px-lg-5">
         <Row className="justify-content-center">
           <Col lg={8} className="text-center mb-5">
             <div className="section-title-wrapper-v2">

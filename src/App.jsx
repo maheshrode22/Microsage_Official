@@ -21,7 +21,7 @@ const HomePage = () => (
     <Stats />
     <HowItWorks />
     <LearningTracks />
-    <Testimonials />
+    {/* <Testimonials /> */}
     <TrustPanel />
     <CallToAction />
   </>

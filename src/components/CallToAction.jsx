@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import './CallToAction.css';
+import '../styles/components/CallToAction.css';
 
 const actions = [
   {
@@ -28,7 +28,7 @@ const actions = [
 
 const CallToAction = () => (
   <section className="cta-section section-padding" id="cta">
-    <Container>
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">Get Started</h2>

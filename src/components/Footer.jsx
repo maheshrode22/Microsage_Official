@@ -1,7 +1,8 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
-import './Footer.css';
+import Logo from './Logo';
+import '../styles/components/Footer.css';
 
 const Footer = () => {
   return (
@@ -10,8 +11,8 @@ const Footer = () => {
         <Row>
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-brand">
-              <h4 className="footer-brand-name">Microsage</h4>
-              <p className="footer-brand-tagline">Private Limited</p>
+              <Logo height={45} className="mb-3" variant="light" />
+
               <p className="footer-description">
                 Transforming education and talent development in India with
                 AI-powered learning solutions.
@@ -27,6 +28,8 @@ const Footer = () => {
               <li><Link to="/products">Products</Link></li>
               <li><Link to="/contact">Contact</Link></li>
               <li><Link to="/career">Careers</Link></li>
+              <li><Link to="/terms">Terms & Conditions</Link></li>
+              <li><Link to="/privacy">Privacy Policy</Link></li>
             </ul>
           </Col>
           <Col lg={3} md={6} className="mb-4">
@@ -42,7 +45,12 @@ const Footer = () => {
             <ul className="footer-contact">
               <li>
                 <span className="footer-icon">📍</span>
-                <span>Hadapsar, Pune, Maharashtra</span>
+                <div className="footer-address">
+                  B-303, GARDENIA, TUPE NAGAR<br />
+                  SADE SATRA NALI PU<br />
+                  Hadapsar, Pune<br />
+                  Maharashtra, India - 411028
+                </div>
               </li>
               <li>
                 <span className="footer-icon">📞</span>
@@ -50,7 +58,7 @@ const Footer = () => {
               </li>
               <li>
                 <span className="footer-icon">✉️</span>
-                <a href="mailto:microsagepl@gmail.com">microsagepl@gmail.com</a>
+                <a href="mailto:info@gatetutor.in">info@gatetutor.in</a>
               </li>
               <li>
                 <span className="footer-icon">🌐</span>
@@ -62,13 +70,20 @@ const Footer = () => {
         <Row className="mt-4">
           <Col lg={12}>
             <div className="footer-bottom">
-              <p className="footer-copyright">
-                © {new Date().getFullYear()} Microsage Private Limited. All rights reserved.
+              <p className="footer-legal mb-3">
+                CIN: U72200PN2022PTC213457 | Startup India & MSME Certified
               </p>
-              <p className="footer-legal">
-                CIN: U72200PN2022PTC213457 |
-                Startup India & MSME Certified
-              </p>
+              <div className="footer-copyright-row">
+                <span className="footer-copyright">
+                  © {new Date().getFullYear()} Microsage Private Limited. All rights reserved.
+                </span>
+                <span className="mx-3 footer-separator">|</span>
+                <div className="footer-legal-links-inline">
+                  <Link to="/terms" className="footer-legal-link">Terms & Conditions</Link>
+                  <span className="mx-2 footer-separator">|</span>
+                  <Link to="/privacy" className="footer-legal-link">Privacy Policy</Link>
+                </div>
+              </div>
             </div>
           </Col>
         </Row>

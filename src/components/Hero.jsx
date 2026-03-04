@@ -1,14 +1,14 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import './Hero.css';
+import '../styles/components/Hero.css';
 
 const Hero = () => {
   const navigate = useNavigate();
 
   return (
     <section id="home" className="hero-section">
-      <Container>
+      <Container fluid className="px-4 px-lg-5">
         <Row className="align-items-center min-vh-100">
           <Col lg={6}>
             <div className="hero-content">
@@ -16,25 +16,25 @@ const Hero = () => {
                 Transforming Education & Talent Development in India
               </h1>
               <p className="hero-subtitle">
-                India's first AI-powered learning and employability system designed to bridge 
-                the gap between academic preparation and real-world career readiness. 
-                Empowering students, institutions, and corporates with cutting-edge technology 
+                India's first AI-powered learning and employability system designed to bridge
+                the gap between academic preparation and real-world career readiness.
+                Empowering students, institutions, and corporates with cutting-edge technology
                 solutions for smarter education and efficient hiring.
               </p>
               <div className="hero-highlights">
                 <p className="highlight-text">
-                  <strong>🎯 Key Features:</strong> AI-Powered Learning • GATE Preparation • Campus Hiring • 
+                  <strong>🎯 Key Features:</strong> AI-Powered Learning • GATE Preparation • Campus Hiring •
                   Corporate Recruitment • NEP & OBE Compliant LMS • 150+ Partner Institutions • 11+ Lakh Active Students
                 </p>
               </div>
               <div className="hero-buttons">
-                <Button 
+                <Button
                   className="btn-primary-custom me-3 mb-3"
                   onClick={() => navigate('/products')}
                 >
                   Explore Products
                 </Button>
-                <Button 
+                <Button
                   variant="outline-primary"
                   className="mb-3"
                   onClick={() => navigate('/contact')}
@@ -61,9 +61,9 @@ const Hero = () => {
           <Col lg={6}>
             <div className="hero-image">
               <div className="hero-image-wrapper">
-                <img 
-                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop" 
-                  alt="Education Technology" 
+                <img
+                  src="https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=800&h=600&fit=crop"
+                  alt="Education Technology"
                   className="hero-main-image"
                 />
                 <div className="floating-card card-1">

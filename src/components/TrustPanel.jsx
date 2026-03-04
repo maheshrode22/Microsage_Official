@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './TrustPanel.css';
+import '../styles/components/TrustPanel.css';
 
 const trustItems = [
   { title: 'NEP & OBE Ready', text: 'Aligned with outcome-based education and NEP compliance.' },
@@ -10,8 +10,8 @@ const trustItems = [
 ];
 
 const TrustPanel = () => (
-  <section className="trust-section section-padding" id="trust">
-    <Container>
+  <section className="trust-panel section-padding">
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">Built for Trust</h2>

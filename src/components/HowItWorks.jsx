@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './HowItWorks.css';
+import '../styles/components/HowItWorks.css';
 
 const steps = [
   {
@@ -23,7 +23,7 @@ const steps = [
 
 const HowItWorks = () => (
   <section className="howitworks-section section-padding" id="how-it-works">
-    <Container>
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">How It Works</h2>

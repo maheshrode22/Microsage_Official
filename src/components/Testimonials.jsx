@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './Testimonials.css';
+import '../styles/components/Testimonials.css';
 
 const testimonials = [
   {
@@ -22,7 +22,7 @@ const testimonials = [
 
 const Testimonials = () => (
   <section className="testimonials-section section-padding" id="testimonials">
-    <Container>
+    <Container fluid className="px-4 px-lg-5">
       <Row>
         <Col lg={12}>
           <h2 className="section-title">What Partners Say</h2>

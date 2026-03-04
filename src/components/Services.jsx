@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import './Services.css';
+import '../styles/components/Services.css';
 
 const Services = () => {
   const services = [
@@ -45,13 +45,13 @@ const Services = () => {
 
   return (
     <section id="services" className="services-section section-padding">
-      <Container>
+      <Container fluid className="px-4 px-lg-5">
         <Row>
           <Col lg={12}>
             <h2 className="section-title">Our Core Offerings</h2>
             <p className="section-subtitle">
-              Comprehensive solutions for students, institutions, and corporates. 
-              From AI-powered learning platforms to campus hiring systems, we provide 
+              Comprehensive solutions for students, institutions, and corporates.
+              From AI-powered learning platforms to campus hiring systems, we provide
               end-to-end solutions that transform education and recruitment processes.
             </p>
           </Col>
@@ -72,7 +72,7 @@ const Services = () => {
                     {service.description}
                     <br />
                     <span className="service-additional-info">
-                      Trusted by leading institutions and corporates across India for 
+                      Trusted by leading institutions and corporates across India for
                       innovative education and recruitment solutions.
                     </span>
                   </Card.Text>
@@ -125,9 +125,9 @@ const Services = () => {
                   </p>
                 </Col>
                 <Col md={4} className="text-md-end mt-3 mt-md-0">
-                  <a 
-                    href="https://gatetutor.in" 
-                    target="_blank" 
+                  <a
+                    href="https://gatetutor.in"
+                    target="_blank"
                     rel="noopener noreferrer"
                     className="btn btn-primary-custom"
                   >

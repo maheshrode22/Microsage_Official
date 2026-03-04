@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card } from 'react-bootstrap';
-import './Contact.css';
+import '../styles/components/Contact.css';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -26,12 +26,12 @@ const Contact = () => {
 
   return (
     <section id="contact" className="contact-section section-padding">
-      <Container>
+      <Container fluid className="px-4 px-lg-5">
         <Row>
           <Col lg={12}>
             <h2 className="section-title">Get in Touch</h2>
             <p className="section-subtitle">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible. 
+              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
               Whether you're a student, institution, or corporate partner, we're here to help you achieve your goals.
             </p>
           </Col>
@@ -144,7 +144,7 @@ const Contact = () => {
                     Email
                   </h5>
                   <p className="contact-info-text">
-                    <a href="mailto:microsagepl@gmail.com">microsagepl@gmail.com</a>
+                    <a href="mailto:info@gatetutor.in">info@gatetutor.in</a>
                   </p>
                 </Card.Body>
               </Card>

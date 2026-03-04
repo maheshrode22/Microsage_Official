@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
-import { Navbar, Nav, Container } from 'react-bootstrap';
+import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
-import './Header.css';
+import Logo from './Logo';
+import '../styles/components/Header.css';
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -12,17 +13,16 @@ const Header = () => {
   };
 
   return (
-    <Navbar 
-      expand="lg" 
-      fixed="top" 
+    <Navbar
+      expand="lg"
+      fixed="top"
       className="custom-navbar"
       expanded={expanded}
       onToggle={setExpanded}
     >
-      <Container>
+      <Container fluid className="px-4 px-lg-5">
         <Navbar.Brand as={Link} to="/" onClick={handleNavigate} className="navbar-brand-custom">
-          <span className="brand-name">Microsage</span>
-          <span className="brand-tagline">Private Limited - Transforming Education & Talent Development</span>
+          <Logo height={50} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -67,6 +67,26 @@ const Header = () => {
             >
               Contact
             </Nav.Link>
+            <NavDropdown
+              title="Brochures"
+              id="brochures-dropdown"
+              className="custom-nav-dropdown"
+            >
+              <NavDropdown.Item
+                href="https://drive.google.com/file/d/1di62GTWH5yy4ltfwm6eXH3S-FA5fStL_/view?usp=sharing"
+                target="_blank"
+                className="dropdown-item-custom"
+              >
+                GATetutor brochures
+              </NavDropdown.Item>
+              <NavDropdown.Item
+                href="https://drive.google.com/file/d/1dBtOxqmjdHirTAdbP6cAspNMGFE3Fkmq/view?usp=drive_link"
+                target="_blank"
+                className="dropdown-item-custom"
+              >
+                Corporate brochures
+              </NavDropdown.Item>
+            </NavDropdown>
             <Nav.Link
               as={Link}
               to="/career"
