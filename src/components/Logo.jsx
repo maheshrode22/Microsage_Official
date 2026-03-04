@@ -1,20 +1,9 @@
-import React, { useState, useEffect } from 'react';
-
-// Attempt to import the logo image
-let logoImage;
-try {
-    // We use require for dynamic-like checks in some environments,
-    // or a standard import if we're sure it exists.
-    // For now, let's assume standard Vite/CRA import.
-    logoImage = require('../assets/logo.png');
-} catch (e) {
-    logoImage = null;
-}
+import React, { useState } from 'react';
+import logoImage from '../assets/logo.png';
 
 const Logo = ({ height = 40, showText = true, className = "", variant = "dark" }) => {
-    const [imgError, setImgError] = useState(!logoImage);
+    const [imgError, setImgError] = useState(false);
     const textColor = variant === "light" ? "#ffffff" : "#1f2937";
-    const subTextColor = variant === "light" ? "rgba(255, 255, 255, 0.7)" : "#6b7280";
     const brandBlue = "#2b7bb9";
 
     return (
