@@ -30,7 +30,7 @@ const Career = () => (
         <Col lg={12}>
           <h2 className="section-title">Careers</h2>
           <p className="section-subtitle">
-            Join Microsage to build AI-powered learning and hiring products that serve institutions,
+            Join <strong>Microsage Private Limited</strong> to build AI-powered learning and hiring products that serve institutions,
             students, and employers across India.
           </p>
         </Col>

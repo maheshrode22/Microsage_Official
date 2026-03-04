@@ -38,7 +38,7 @@ const About = () => {
                 company dedicated to building impactful digital solutions for students, institutions, and corporates.
               </p>
               <p>
-                At Microsage, we combine innovation with purpose. Our flagship platform
+                At <strong>Microsage Private Limited</strong>, we combine innovation with purpose. Our flagship platform
                 <strong> GATEtutor</strong> is India's first AI-powered learning and employability
                 system designed to bridge the gap between academic preparation and real-world career readiness.
               </p>
@@ -62,7 +62,7 @@ const About = () => {
               <h3 className="about-heading">Our Vision</h3>
               <p>
                 With a rapidly growing network of <strong>150+ institutions</strong> and
-                <strong> 11+ lakh students</strong>, Microsage is setting a new benchmark in
+                <strong> 11+ lakh students</strong>, <strong>Microsage Private Limited</strong> is setting a new benchmark in
                 India's ed-tech and HR-tech ecosystem.
               </p>
               <p>
@@ -87,8 +87,8 @@ const About = () => {
         <Row className="mt-5 justify-content-center">
           <Col lg={8}>
             <div className="company-info text-center">
-              <h3 className="about-heading">Founder</h3>
-              <div className="info-card founder-card mx-auto" style={{ maxWidth: '600px' }}>
+              <h3 className="about-heading">Founder & CEO</h3>
+              <div className="info-card founder-card mx-auto" style={{ maxWidth: '600px', borderTop: '4px solid var(--primary-color)' }}>
                 <div className="founder-photo-wrapper mb-3">
                   <img
                     src={require('../assets/founder photo.png')}

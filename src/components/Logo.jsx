@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import logoImage from '../assets/logo.png';
 
-const Logo = ({ height = 40, showText = true, className = "", variant = "dark" }) => {
+const Logo = ({ height = 40, showText = true, className = "", variant = "dark", text = "MICROSAGE" }) => {
     const [imgError, setImgError] = useState(false);
     const textColor = variant === "light" ? "#ffffff" : "#1f2937";
     const brandBlue = "#2b7bb9";
@@ -68,7 +68,7 @@ const Logo = ({ height = 40, showText = true, className = "", variant = "dark" }
                             fontFamily: "'Inter', 'Segoe UI', system-ui, sans-serif"
                         }}
                     >
-                        MICROSAGE
+                        {text}
                     </span>
 
                 </div>

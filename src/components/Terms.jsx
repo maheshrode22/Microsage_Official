@@ -31,7 +31,7 @@ const Terms = () => {
                         <div className="legal-section">
                             <h3>2. Services Provided</h3>
                             <p>
-                                Microsage provides EdTech and recruitment solutions. We reserve the right to modify, suspend, or discontinue any part of the Services at any time without prior notice.
+                                <strong>Microsage Private Limited</strong> provides EdTech and recruitment solutions. We reserve the right to modify, suspend, or discontinue any part of the Services at any time without prior notice.
                             </p>
                         </div>
 
@@ -69,7 +69,7 @@ const Terms = () => {
                         <div className="legal-section">
                             <h3>6. Limitation of Liability</h3>
                             <p>
-                                To the maximum extent permitted by law, Microsage shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Services.
+                                To the maximum extent permitted by law, <strong>Microsage Private Limited</strong> shall not be liable for any indirect, incidental, special, consequential, or punitive damages resulting from your use of or inability to use the Services.
                             </p>
                         </div>
 

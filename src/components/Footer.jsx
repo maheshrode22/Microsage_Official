@@ -11,7 +11,7 @@ const Footer = () => {
         <Row>
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-brand">
-              <Logo height={45} className="mb-3" variant="light" />
+              <Logo height={45} className="mb-3" variant="light" text="Microsage Private Limited" />
 
               <p className="footer-description">
                 Transforming education and talent development in India with
