@@ -12,6 +12,8 @@ import HowItWorks from './components/HowItWorks';
 import TrustPanel from './components/TrustPanel';
 import CallToAction from './components/CallToAction';
 import Career from './components/Career';
+import Terms from './components/Terms';
+import Privacy from './components/Privacy';
 import Footer from './components/Footer';
 
 const HomePage = () => (
@@ -62,6 +64,8 @@ function App() {
           <Route path="/products" element={<ProductsPage />} />
           <Route path="/contact" element={<ContactPage />} />
           <Route path="/career" element={<Career />} />
+          <Route path="/terms" element={<Terms />} />
+          <Route path="/privacy" element={<Privacy />} />
           <Route path="*" element={<Navigate to="/" replace />} />
         </Routes>
         <Footer />
