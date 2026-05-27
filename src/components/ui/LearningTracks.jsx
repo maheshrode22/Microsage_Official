@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card, Badge } from 'react-bootstrap';
-import '../styles/components/LearningTracks.css';
+import '../../styles/components/LearningTracks.css';
 
 const tracks = [
   {
@@ -69,4 +69,5 @@ const LearningTracks = () => (
 );
 
 export default LearningTracks;
+
 

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import logoImage from '../assets/logo.png';
+import logoImage from '../../assets/logo.png';
 
 const Logo = ({ height = 40, showText = true, className = "", variant = "dark", text = "MICROSAGE" }) => {
     const [imgError, setImgError] = useState(false);
@@ -60,7 +60,7 @@ const Logo = ({ height = 40, showText = true, className = "", variant = "dark", 
                 <div className="d-flex flex-column justify-content-center" style={{ marginLeft: '4px' }}>
                     <span
                         style={{
-                            fontSize: height * 0.58,
+                            fontSize: Math.min(height * 0.45, 22),
                             fontWeight: 800,
                             color: textColor,
                             lineHeight: 0.9,

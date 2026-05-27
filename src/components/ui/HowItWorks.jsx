@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Card } from 'react-bootstrap';
-import '../styles/components/HowItWorks.css';
+import '../../styles/components/HowItWorks.css';
 
 const steps = [
   {
@@ -50,4 +50,5 @@ const HowItWorks = () => (
 );
 
 export default HowItWorks;
+
 

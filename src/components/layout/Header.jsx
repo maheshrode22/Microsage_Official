@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
 import Logo from './Logo';
-import '../styles/components/Header.css';
+import '../../styles/components/Header.css';
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
@@ -22,7 +22,7 @@ const Header = () => {
     >
       <Container fluid className="px-4 px-lg-5">
         <Navbar.Brand as={Link} to="/" onClick={handleNavigate} className="navbar-brand-custom">
-          <Logo height={50} />
+          <Logo height={40} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -103,4 +103,3 @@ const Header = () => {
 };
 
 export default Header;
-

@@ -17,7 +17,7 @@ const About = () => {
             </p>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           <Col lg={6} className="mb-4">
             <div className="about-content">
               <div className="about-icon-wrapper">
@@ -84,14 +84,14 @@ const About = () => {
             </div>
           </Col>
         </Row>
-        <Row className="mt-5 justify-content-center">
+        <Row className="mt-4 justify-content-center">
           <Col lg={8}>
             <div className="company-info text-center">
               <h3 className="about-heading">Founder & CEO</h3>
-              <div className="info-card founder-card mx-auto" style={{ maxWidth: '600px', borderTop: '4px solid var(--primary-color)' }}>
-                <div className="founder-photo-wrapper mb-3">
+              <div className="info-card founder-card mx-auto" style={{ maxWidth: '600px' }}>
+                <div className="founder-photo-wrapper mb-2">
                   <img
-                    src={require('../assets/founder photo.png')}
+                    src={require('../assets/founder-photo.png')}
                     alt="Mallikarjun Borigidde"
                     className="founder-photo"
                   />
@@ -103,7 +103,7 @@ const About = () => {
             </div>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           <Col lg={12}>
             <div className="company-info">
               <Row>
@@ -143,4 +143,5 @@ const About = () => {
 };
 
 export default About;
+
 

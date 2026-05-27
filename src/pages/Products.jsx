@@ -38,17 +38,15 @@ const Products = () => {
           <Col lg={12}>
             <h2 className="section-title">Our Products</h2>
             <p className="section-subtitle">
-              Innovative education technology solutions powered by AI. Our comprehensive
-              product suite includes learning management systems, assessment platforms, and
-              recruitment solutions designed to transform how students learn and how companies hire.
+              AI-powered education technology for students, institutions, and recruiters.
             </p>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           {products.map((product, index) => (
             <Col lg={12} key={index} className="mb-4">
               <Card className={`card-custom product-card ${product.highlight ? 'product-card-highlight' : ''}`}>
-                <Card.Body className="p-5">
+                <Card.Body className="p-4">
                   <Row className="align-items-center">
                     <Col lg={8}>
                       <h3 className="product-title">{product.title}</h3>
@@ -62,7 +60,7 @@ const Products = () => {
                         ))}
                       </ul>
                       {product.highlight && (
-                        <div className="product-highlight-info mt-3">
+                        <div className="product-highlight-info mt-2">
                           <p className="mb-2">
                             <strong>All you need is a PC & Internet – we take care of the rest.</strong>
                           </p>
@@ -75,7 +73,7 @@ const Products = () => {
                         href={product.link}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="btn btn-primary-custom mt-4"
+                        className="btn btn-primary-custom mt-3"
                       >
                         {product.highlight ? 'Get Started with Campus Hiring' : 'Explore GATEtutor'}
                       </a>

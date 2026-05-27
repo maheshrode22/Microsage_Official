@@ -1,18 +1,81 @@
-.trust-section {
-  background: #f9fafb;
+/* ===== TRUST PANEL SECTION ===== */
+.trust-panel {
+  background: #f8fafc;
+  position: relative;
 }
 
-.trust-card .trust-title {
-  font-size: 1.05rem;
+/* Trust Cards */
+.trust-card {
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 16px;
+  padding: 2rem;
+  height: 100%;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.trust-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #2563eb, #3b82f6, #60a5fa);
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.trust-card:hover {
+  border-color: rgba(37, 99, 235, 0.2);
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+  transform: translateY(-4px);
+}
+
+.trust-card:hover::before {
+  opacity: 1;
+}
+
+/* Icon */
+.trust-icon {
+  font-size: 1.75rem;
+  margin-bottom: 1.25rem;
+  width: 52px;
+  height: 52px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.trust-card:hover .trust-icon {
+  background: #2563eb;
+  transform: scale(1.05);
+}
+
+/* Title */
+.trust-title {
+  font-size: 1.15rem;
   font-weight: 700;
-  color: var(--text-dark);
-  margin-bottom: 0.4rem;
+  color: #0f172a;
+  margin-bottom: 0.6rem;
 }
 
-.trust-card .trust-text {
-  color: var(--text-light);
-  line-height: 1.6;
+/* Text */
+.trust-text {
+  color: #64748b;
+  line-height: 1.7;
   margin: 0;
-  font-size: 0.97rem;
+  font-size: 0.95rem;
 }
 
+/* ===== RESPONSIVE ===== */
+@media (max-width: 576px) {
+  .trust-card {
+    padding: 1.5rem;
+  }
+}

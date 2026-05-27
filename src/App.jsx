@@ -1,20 +1,28 @@
-import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
-import Header from './components/Header';
-import Hero from './components/Hero';
-import Stats from './components/Stats';
-import About from './components/About';
-import Services from './components/Services';
-import Products from './components/Products';
-import Contact from './components/Contact';
-import LearningTracks from './components/LearningTracks';
-import HowItWorks from './components/HowItWorks';
-import TrustPanel from './components/TrustPanel';
-import CallToAction from './components/CallToAction';
-import Career from './components/Career';
-import Terms from './components/Terms';
-import Privacy from './components/Privacy';
-import Footer from './components/Footer';
+import React, { useEffect } from 'react';
+import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
+
+// Layout
+import Header from './components/layout/Header';
+import Footer from './components/layout/Footer';
+
+// Pages
+import About from './pages/About';
+import Services from './pages/Services';
+import Products from './pages/Products';
+import Contact from './pages/Contact';
+import Career from './pages/Career';
+import JobDetail from './pages/JobDetail';
+import Terms from './pages/Terms';
+import Privacy from './pages/Privacy';
+import NotFound from './pages/NotFound';
+
+// UI sections (Home page sections)
+import Hero from './components/ui/Hero';
+import Stats from './components/ui/Stats';
+import HowItWorks from './components/ui/HowItWorks';
+import LearningTracks from './components/ui/LearningTracks';
+import TrustPanel from './components/ui/TrustPanel';
+import CallToAction from './components/ui/CallToAction';
 
 const HomePage = () => (
   <>
@@ -22,57 +30,44 @@ const HomePage = () => (
     <Stats />
     <HowItWorks />
     <LearningTracks />
-    {/* <Testimonials /> */}
     <TrustPanel />
     <CallToAction />
   </>
 );
 
-const AboutPage = () => (
-  <>
-    <About />
-  </>
-);
+const AppContent = () => {
+  const { pathname } = useLocation();
 
-const ServicesPage = () => (
-  <>
-    <Services />
-  </>
-);
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
-const ProductsPage = () => (
-  <>
-    <Products />
-  </>
-);
-
-const ContactPage = () => (
-  <>
-    <Contact />
-  </>
-);
+  return (
+    <div className="App">
+      <Header />
+      <Routes>
+        <Route path="/" element={<HomePage />} />
+        <Route path="/about" element={<About />} />
+        <Route path="/services" element={<Services />} />
+        <Route path="/products" element={<Products />} />
+        <Route path="/contact" element={<Contact />} />
+        <Route path="/career" element={<Career />} />
+        <Route path="/career/:id" element={<JobDetail />} />
+        <Route path="/terms" element={<Terms />} />
+        <Route path="/privacy" element={<Privacy />} />
+        <Route path="*" element={<NotFound />} />
+      </Routes>
+      <Footer />
+    </div>
+  );
+};
 
 function App() {
   return (
     <Router>
-      <div className="App">
-        <Header />
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/about" element={<AboutPage />} />
-          <Route path="/services" element={<ServicesPage />} />
-          <Route path="/products" element={<ProductsPage />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/career" element={<Career />} />
-          <Route path="/terms" element={<Terms />} />
-          <Route path="/privacy" element={<Privacy />} />
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-        <Footer />
-      </div>
+      <AppContent />
     </Router>
   );
 }
 
 export default App;
-

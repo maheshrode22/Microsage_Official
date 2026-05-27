@@ -31,12 +31,11 @@ const Contact = () => {
           <Col lg={12}>
             <h2 className="section-title">Get in Touch</h2>
             <p className="section-subtitle">
-              Have questions? We'd love to hear from you. Send us a message and we'll respond as soon as possible.
-              Whether you're a student, institution, or corporate partner, we're here to help you achieve your goals.
+              Have questions? Send us a message and we'll respond as soon as possible.
             </p>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           <Col lg={8} className="mb-4">
             <Card className="card-custom contact-form-card">
               <div className="contact-form-header">

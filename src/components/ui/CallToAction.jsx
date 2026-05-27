@@ -1,6 +1,6 @@
 import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
-import '../styles/components/CallToAction.css';
+import '../../styles/components/CallToAction.css';
 
 const actions = [
   {
@@ -63,4 +63,5 @@ const CallToAction = () => (
 );
 
 export default CallToAction;
+
 

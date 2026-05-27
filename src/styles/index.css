@@ -39,13 +39,13 @@ code {
   --shadow-xl: 0 20px 25px rgba(0, 0, 0, 0.15);
 
   /* Fluid Spacing & Typography */
-  --section-padding: clamp(60px, 10vh, 120px);
+  --section-padding: clamp(48px, 6vh, 80px);
   --fs-h1: clamp(2.5rem, 6vw, 4.5rem);
   --fs-h2: clamp(2rem, 5vw, 3.5rem);
   --fs-subtitle: clamp(1rem, 2vw, 1.25rem);
 
   /* Header Offset */
-  --nav-height: 100px;
+  --nav-height: 72px;
 }
 
 .App {
@@ -80,6 +80,7 @@ section {
   -webkit-text-fill-color: transparent;
   background-clip: text;
   margin-bottom: 1.5rem;
+  padding-bottom: 0.75rem;
   text-align: center;
   position: relative;
   display: inline-block;
@@ -90,11 +91,11 @@ section {
 .section-title::after {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 100px;
-  height: 5px;
+  width: 80px;
+  height: 4px;
   background: var(--gradient-blue);
   border-radius: 10px;
   animation: expandWidth 0.8s ease-out 0.3s both;
@@ -103,11 +104,11 @@ section {
 .section-title::before {
   content: '';
   position: absolute;
-  bottom: -15px;
+  bottom: -10px;
   left: 50%;
   transform: translateX(-50%);
-  width: 200px;
-  height: 5px;
+  width: 160px;
+  height: 4px;
   background: linear-gradient(90deg, transparent, rgba(37, 99, 235, 0.3), transparent);
   border-radius: 10px;
   opacity: 0.5;
@@ -131,16 +132,16 @@ section {
   }
 
   to {
-    width: 100px;
+    width: 80px;
   }
 }
 
 .section-subtitle {
   font-size: var(--fs-subtitle);
-  color: var(--text-dark);
+  color: #64748b;
   text-align: center;
-  margin-bottom: 4rem;
-  max-width: 1200px;
+  margin-bottom: 2.5rem;
+  max-width: 800px;
   margin-left: auto;
   margin-right: auto;
   line-height: 1.8;
@@ -221,15 +222,15 @@ section {
 }
 
 .card-custom:hover {
-  transform: translateY(-10px) scale(1.02);
-  box-shadow: 0 15px 40px rgba(0, 0, 0, 0.2);
+  transform: translateY(-6px);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.12);
 }
 
 .icon-box {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
-  border-radius: 10px;
+  border-radius: 14px;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -277,10 +278,7 @@ section {
   }
 }
 
-/* Smooth transitions for all interactive elements */
-* {
-  transition-timing-function: cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
+/* Smooth transitions are defined per-component for precise control */
 
 /* Enhanced focus states */
 *:focus {
@@ -294,6 +292,6 @@ section {
   }
 
   .section-padding {
-    padding: 70px 0;
+    padding: 40px 0;
   }
 }

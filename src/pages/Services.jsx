@@ -50,13 +50,11 @@ const Services = () => {
           <Col lg={12}>
             <h2 className="section-title">Our Core Offerings</h2>
             <p className="section-subtitle">
-              Comprehensive solutions for students, institutions, and corporates.
-              From AI-powered learning platforms to campus hiring systems, we provide
-              end-to-end solutions that transform education and recruitment processes.
+              Comprehensive solutions for students, institutions, and corporates — from AI-powered learning to campus hiring.
             </p>
           </Col>
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           {services.map((service, index) => (
             <Col lg={4} md={6} className="mb-4" key={index}>
               <Card className="card-custom service-card h-100">
@@ -70,11 +68,6 @@ const Services = () => {
                   <Card.Title className="service-title">{service.title}</Card.Title>
                   <Card.Text className="service-description">
                     {service.description}
-                    <br />
-                    <span className="service-additional-info">
-                      Trusted by leading institutions and corporates across India for
-                      innovative education and recruitment solutions.
-                    </span>
                   </Card.Text>
                   <ul className="service-features">
                     {service.features.map((feature, idx) => (
@@ -86,7 +79,7 @@ const Services = () => {
             </Col>
           ))}
         </Row>
-        <Row className="mt-5">
+        <Row className="mt-4">
           <Col lg={12}>
             <div className="services-highlight hr-leaders-section">
               <Row className="align-items-center">
