@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import { BarChart3, Briefcase, GraduationCap, Rocket } from 'lucide-react';
 import '../../styles/components/Hero.css';
 
 const Hero = () => {
@@ -13,7 +14,8 @@ const Hero = () => {
           <Col lg={6} className="hero-left">
             <div className="hero-content">
               <div className="hero-badge-top">
-                <span>🚀 India's First AI-Powered EdTech & HRTech Platform</span>
+                <Rocket size={16} strokeWidth={2.5} />
+                <span>India&apos;s First AI-Powered EdTech &amp; HRTech Platform</span>
               </div>
               <h1 className="hero-title">
                 Transforming Education & Talent Development
@@ -39,15 +41,15 @@ const Hero = () => {
               </div>
               <div className="hero-trust-bar">
                 <div className="trust-stat">
-                  <strong>150+</strong>
+                  <strong>200+</strong>
                   <span>Institutions</span>
                 </div>
-                <div className="trust-divider"></div>
+                <div className="trust-divider" />
                 <div className="trust-stat">
                   <strong>11+ Lakh</strong>
                   <span>Students</span>
                 </div>
-                <div className="trust-divider"></div>
+                <div className="trust-divider" />
                 <div className="trust-stat">
                   <strong>100%</strong>
                   <span>AI-Powered</span>
@@ -66,21 +68,21 @@ const Hero = () => {
               </div>
               <div className="hero-feature-cards">
                 <div className="feature-card fc-1">
-                  <span className="fc-icon">🎓</span>
+                  <span className="fc-icon"><GraduationCap size={22} strokeWidth={2} /></span>
                   <div>
                     <strong>GATE Prep</strong>
                     <span>AI-powered learning</span>
                   </div>
                 </div>
                 <div className="feature-card fc-2">
-                  <span className="fc-icon">💼</span>
+                  <span className="fc-icon"><Briefcase size={22} strokeWidth={2} /></span>
                   <div>
                     <strong>Campus Hiring</strong>
                     <span>Role-mapped assessments</span>
                   </div>
                 </div>
                 <div className="feature-card fc-3">
-                  <span className="fc-icon">📊</span>
+                  <span className="fc-icon"><BarChart3 size={22} strokeWidth={2} /></span>
                   <div>
                     <strong>NEP & OBE</strong>
                     <span>Compliant LMS</span>

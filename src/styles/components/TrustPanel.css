@@ -40,7 +40,6 @@
 
 /* Icon */
 .trust-icon {
-  font-size: 1.75rem;
   margin-bottom: 1.25rem;
   width: 52px;
   height: 52px;
@@ -50,10 +49,12 @@
   align-items: center;
   justify-content: center;
   transition: all 0.3s ease;
+  color: #2563eb;
 }
 
 .trust-card:hover .trust-icon {
   background: #2563eb;
+  color: #ffffff;
   transform: scale(1.05);
 }
 

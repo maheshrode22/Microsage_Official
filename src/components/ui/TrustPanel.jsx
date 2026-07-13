@@ -1,25 +1,26 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { Accessibility, BadgeCheck, Lock, Shield } from 'lucide-react';
 import '../../styles/components/TrustPanel.css';
 
 const trustItems = [
   {
-    icon: '🛡️',
+    Icon: Shield,
     title: 'NEP & OBE Ready',
     text: 'Fully aligned with National Education Policy and outcome-based education frameworks.',
   },
   {
-    icon: '✅',
+    Icon: BadgeCheck,
     title: 'Assessment Integrity',
     text: 'Role-mapped tests with real-time analytics and AI-powered proctoring.',
   },
   {
-    icon: '🔒',
+    Icon: Lock,
     title: 'Data Privacy',
     text: 'Enterprise-grade encryption and secure handling of all learner data.',
   },
   {
-    icon: '♿',
+    Icon: Accessibility,
     title: 'Accessibility First',
     text: 'WCAG compliant with keyboard navigation and scalable text support.',
   },
@@ -37,12 +38,14 @@ const TrustPanel = () => (
         </Col>
       </Row>
       <Row className="trust-grid">
-        {trustItems.map((item, idx) => (
-          <Col lg={3} md={6} className="mb-4" key={idx}>
+        {trustItems.map(({ Icon, title, text }) => (
+          <Col lg={3} md={6} className="mb-4" key={title}>
             <div className="trust-card">
-              <div className="trust-icon">{item.icon}</div>
-              <h4 className="trust-title">{item.title}</h4>
-              <p className="trust-text">{item.text}</p>
+              <div className="trust-icon">
+                <Icon size={24} strokeWidth={2} />
+              </div>
+              <h4 className="trust-title">{title}</h4>
+              <p className="trust-text">{text}</p>
             </div>
           </Col>
         ))}

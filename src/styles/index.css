@@ -52,6 +52,10 @@ code {
   padding-top: var(--nav-height);
 }
 
+.App--no-nav {
+  padding-top: 0;
+}
+
 section {
   scroll-margin-top: var(--nav-height);
 }

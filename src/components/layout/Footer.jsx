@@ -1,6 +1,7 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { Globe, Mail, MapPin, Phone } from 'lucide-react';
 import Logo from './Logo';
 import '../../styles/components/Footer.css';
 
@@ -49,22 +50,22 @@ const Footer = () => {
             <h6 className="footer-heading">Contact</h6>
             <ul className="footer-contact">
               <li>
-                <span className="footer-icon">📍</span>
+                <span className="footer-icon"><MapPin size={16} strokeWidth={2} /></span>
                 <span>
                   B-303, Gardenia, Tupe Nagar,<br />
                   Hadapsar, Pune 411028
                 </span>
               </li>
               <li>
-                <span className="footer-icon">📞</span>
+                <span className="footer-icon"><Phone size={16} strokeWidth={2} /></span>
                 <a href="tel:9960334040">9960334040</a>
               </li>
               <li>
-                <span className="footer-icon">✉️</span>
+                <span className="footer-icon"><Mail size={16} strokeWidth={2} /></span>
                 <a href="mailto:info@gatetutor.in">info@gatetutor.in</a>
               </li>
               <li>
-                <span className="footer-icon">🌐</span>
+                <span className="footer-icon"><Globe size={16} strokeWidth={2} /></span>
                 <a href="https://gatetutor.in" target="_blank" rel="noopener noreferrer">gatetutor.in</a>
               </li>
             </ul>

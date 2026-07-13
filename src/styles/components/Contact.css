@@ -71,7 +71,11 @@
 }
 
 .contact-icon {
-  font-size: 1.15rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
+  flex-shrink: 0;
 }
 
 .contact-info-text {

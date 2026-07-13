@@ -53,8 +53,11 @@
   z-index: 2;
 }
 
-.icon-emoji {
-  font-size: 1.5rem;
+.service-icon-lucide {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  color: #2563eb;
 }
 
 /* Card body */
@@ -87,21 +90,19 @@
 }
 
 .service-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   color: #475569;
   padding: 0.35rem 0;
-  padding-left: 1.25rem;
-  position: relative;
   font-weight: 500;
   font-size: 0.85rem;
 }
 
-.service-features li::before {
-  content: '✓';
-  position: absolute;
-  left: 0;
+.service-check-icon {
   color: #2563eb;
-  font-weight: 700;
-  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
 }
 
 /* ===== HR LEADERS HIGHLIGHT ===== */
@@ -184,9 +185,26 @@
   background: rgba(255, 255, 255, 0.12);
 }
 
-.hr-check {
-  font-size: 0.9rem;
+.hr-check-icon {
+  color: #86efac;
   flex-shrink: 0;
+}
+
+.hr-trust-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.hr-inline-icon {
+  color: #93c5fd;
+  flex-shrink: 0;
+}
+
+.hr-trust-sep {
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0.25rem;
 }
 
 .hr-feature-item span:last-child {

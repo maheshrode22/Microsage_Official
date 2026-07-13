@@ -1,6 +1,8 @@
+import { Briefcase, GraduationCap, School } from 'lucide-react';
+
 export const services = [
   {
-    icon: '🎓',
+    Icon: GraduationCap,
     image: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?w=600&h=400&fit=crop',
     title: 'GATEtutor B2C Platform',
     description: 'Subscription-based self-study and practice ecosystem for GATE & placement preparation. Empowering students with intelligent study tools and comprehensive practice materials.',
@@ -12,8 +14,8 @@ export const services = [
     ],
   },
   {
-    icon: '🏫',
-    image: 'https://images.unsplash.com/photo-1523050854058-8df90110c9f1?w=600&h=400&fit=crop',
+    Icon: School,
+    image: 'https://images.unsplash.com/photo-1524178232363-1fb2b075b655?w=600&h=400&fit=crop',
     title: 'GATEtutor LMS for Colleges',
     description: 'NEP & OBE-compliant platform with role-based dashboards, assessment tools, and analytics. Helping institutions deliver smarter education.',
     features: [
@@ -24,7 +26,7 @@ export const services = [
     ],
   },
   {
-    icon: '💼',
+    Icon: Briefcase,
     image: 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=600&h=400&fit=crop',
     title: 'GATEtutor + PragyaAI - Campus Hiring Platform',
     description: "India's first AI-powered learning and recruitment platform tailored for campus hiring. Hire job-ready freshers with speed and accuracy.",

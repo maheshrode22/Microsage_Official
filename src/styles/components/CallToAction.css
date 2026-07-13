@@ -2,6 +2,18 @@
   background: #ffffff;
 }
 
+.cta-icon-wrap {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #eff6ff, #dbeafe);
+  color: #2563eb;
+  margin-bottom: 0.85rem;
+}
+
 .cta-card .cta-title {
   font-size: 1.3rem;
   font-weight: 700;

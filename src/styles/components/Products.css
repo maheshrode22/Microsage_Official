@@ -65,21 +65,37 @@
 }
 
 .product-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.5rem;
   color: #475569;
   padding: 0.4rem 0;
-  padding-left: 1.5rem;
-  position: relative;
   font-size: 0.9rem;
   font-weight: 500;
   line-height: 1.5;
 }
 
-.feature-icon {
-  position: absolute;
-  left: 0;
+.feature-icon-lucide {
   color: #2563eb;
-  font-weight: 700;
-  font-size: 0.9rem;
+  flex-shrink: 0;
+  margin-top: 0.15rem;
+}
+
+.product-trust-line {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.product-inline-icon {
+  color: #93c5fd;
+  flex-shrink: 0;
+}
+
+.product-trust-sep {
+  color: rgba(255, 255, 255, 0.35);
+  margin: 0 0.25rem;
 }
 
 /* Visual side */

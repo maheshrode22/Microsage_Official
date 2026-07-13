@@ -4,7 +4,7 @@ import { useState, useEffect, useRef } from 'react';
  * Custom hook that animates a numeric counter when the element
  * enters the viewport using IntersectionObserver.
  *
- * @param {string} numberStr - The target number string (e.g. "150+", "11 Lakh", "100%")
+ * @param {string} numberStr - The target number string (e.g. "200+", "11 Lakh", "100%")
  * @returns {{ count: number, isVisible: boolean, cardRef: React.RefObject }}
  */
 const useCounterAnimation = (numberStr) => {

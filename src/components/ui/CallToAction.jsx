@@ -1,9 +1,11 @@
 import React from 'react';
 import { Container, Row, Col, Button, Card } from 'react-bootstrap';
+import { GraduationCap, School, Users } from 'lucide-react';
 import '../../styles/components/CallToAction.css';
 
 const actions = [
   {
+    Icon: GraduationCap,
     title: 'For Students',
     text: 'Start practice and mock tests tailored to your exam goals.',
     cta: 'Start Practicing',
@@ -11,6 +13,7 @@ const actions = [
     variant: 'primary',
   },
   {
+    Icon: School,
     title: 'For Institutions',
     text: 'Schedule a demo to see NEP/OBE aligned LMS in action.',
     cta: 'Schedule Demo',
@@ -18,6 +21,7 @@ const actions = [
     variant: 'outline',
   },
   {
+    Icon: Users,
     title: 'For Recruiters',
     text: 'Run campus drives with AI-powered, role-mapped assessments.',
     cta: 'Request Drive',
@@ -36,20 +40,23 @@ const CallToAction = () => (
         </Col>
       </Row>
       <Row className="mt-4">
-        {actions.map((action, idx) => (
-          <Col lg={4} md={6} className="mb-4" key={idx}>
+        {actions.map(({ Icon, title, text, cta, href, variant }) => (
+          <Col lg={4} md={6} className="mb-4" key={title}>
             <Card className="card-custom cta-card h-100">
               <Card.Body className="p-4 d-flex flex-column">
-                <h4 className="cta-title">{action.title}</h4>
-                <p className="cta-text">{action.text}</p>
+                <div className="cta-icon-wrap">
+                  <Icon size={22} strokeWidth={2} />
+                </div>
+                <h4 className="cta-title">{title}</h4>
+                <p className="cta-text">{text}</p>
                 <div className="mt-auto">
-                  {action.variant === 'primary' ? (
-                    <Button className="btn-primary-custom w-100" href={action.href}>
-                      {action.cta}
+                  {variant === 'primary' ? (
+                    <Button className="btn-primary-custom w-100" href={href}>
+                      {cta}
                     </Button>
                   ) : (
-                    <Button variant="outline-primary" className="w-100 cta-outline" href={action.href}>
-                      {action.cta}
+                    <Button variant="outline-primary" className="w-100 cta-outline" href={href}>
+                      {cta}
                     </Button>
                   )}
                 </div>
@@ -63,5 +70,3 @@ const CallToAction = () => (
 );
 
 export default CallToAction;
-
-

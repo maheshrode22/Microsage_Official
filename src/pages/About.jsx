@@ -61,7 +61,7 @@ const About = () => {
               </div>
               <h3 className="about-heading">Our Vision</h3>
               <p>
-                With a rapidly growing network of <strong>150+ institutions</strong> and
+                With a rapidly growing network of <strong>200+ institutions</strong> and
                 <strong> 11+ lakh students</strong>, <strong>Microsage Private Limited</strong> is setting a new benchmark in
                 India's ed-tech and HR-tech ecosystem.
               </p>

@@ -4,7 +4,9 @@
   "description": "Official website for Microsage Private Limited",
   "private": true,
   "dependencies": {
+    "@supabase/supabase-js": "^2.110.2",
     "bootstrap": "^5.3.2",
+    "lucide-react": "^1.24.0",
     "react": "^18.2.0",
     "react-bootstrap": "^2.9.1",
     "react-dom": "^18.2.0",

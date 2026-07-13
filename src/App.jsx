@@ -1,6 +1,9 @@
 import React, { useEffect } from 'react';
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/auth/ProtectedRoute';
+
 // Layout
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
@@ -15,6 +18,8 @@ import JobDetail from './pages/JobDetail';
 import Terms from './pages/Terms';
 import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
+import Login from './pages/Login';
+import Dashboard from './pages/Dashboard';
 
 // UI sections (Home page sections)
 import Hero from './components/ui/Hero';
@@ -37,14 +42,15 @@ const HomePage = () => (
 
 const AppContent = () => {
   const { pathname } = useLocation();
+  const hidePublicLayout = pathname === '/login' || pathname.startsWith('/dashboard');
 
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
   return (
-    <div className="App">
-      <Header />
+    <div className={`App${hidePublicLayout ? ' App--no-nav' : ''}`}>
+      {!hidePublicLayout && <Header />}
       <Routes>
         <Route path="/" element={<HomePage />} />
         <Route path="/about" element={<About />} />
@@ -55,9 +61,18 @@ const AppContent = () => {
         <Route path="/career/:id" element={<JobDetail />} />
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={(
+            <ProtectedRoute>
+              <Dashboard />
+            </ProtectedRoute>
+          )}
+        />
         <Route path="*" element={<NotFound />} />
       </Routes>
-      <Footer />
+      {!hidePublicLayout && <Footer />}
     </div>
   );
 };
@@ -65,7 +80,9 @@ const AppContent = () => {
 function App() {
   return (
     <Router>
-      <AppContent />
+      <AuthProvider>
+        <AppContent />
+      </AuthProvider>
     </Router>
   );
 }

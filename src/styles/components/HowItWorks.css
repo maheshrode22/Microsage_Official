@@ -7,6 +7,7 @@
 }
 
 .how-card .how-step {
+  position: relative;
   width: 52px;
   height: 52px;
   border-radius: 14px;
@@ -15,10 +16,25 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: 700;
-  font-size: 1.15rem;
   margin-bottom: 1.25rem;
   box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+}
+
+.how-step-num {
+  position: absolute;
+  top: -6px;
+  right: -6px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #0f172a;
+  color: #fff;
+  font-size: 0.68rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid #fff;
 }
 
 .how-card .how-title {

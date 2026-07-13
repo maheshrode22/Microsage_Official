@@ -1,12 +1,14 @@
 import React, { useState } from 'react';
 import { Navbar, Nav, Container, NavDropdown } from 'react-bootstrap';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../../context/AuthContext';
 import Logo from './Logo';
 import '../../styles/components/Header.css';
 
 const Header = () => {
   const [expanded, setExpanded] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, loading } = useAuth();
 
   const handleNavigate = () => {
     setExpanded(false);
@@ -95,6 +97,27 @@ const Header = () => {
             >
               Careers
             </Nav.Link>
+            {!loading && (
+              isAuthenticated ? (
+                <Nav.Link
+                  as={Link}
+                  to="/dashboard"
+                  onClick={handleNavigate}
+                  className={`nav-link-dashboard ${location.pathname.startsWith('/dashboard') ? 'active' : ''}`}
+                >
+                  Dashboard
+                </Nav.Link>
+              ) : (
+                <Nav.Link
+                  as={Link}
+                  to="/login"
+                  onClick={handleNavigate}
+                  className={location.pathname === '/login' ? 'active' : ''}
+                >
+                  Login
+                </Nav.Link>
+              )
+            )}
           </Nav>
         </Navbar.Collapse>
       </Container>
