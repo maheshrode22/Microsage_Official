@@ -1,10 +1,10 @@
 import { useState, useEffect, useRef } from 'react';
 
 /**
- * Custom hook that animates a numeric counter when the element
- * enters the viewport using IntersectionObserver.
+ * Animates a numeric counter when the element enters the viewport.
+ * Supports formats like "200+", "100,000+", "99.9%", "11 Lakh".
  *
- * @param {string} numberStr - The target number string (e.g. "200+", "11 Lakh", "100%")
+ * @param {string} numberStr
  * @returns {{ count: number, isVisible: boolean, cardRef: React.RefObject }}
  */
 const useCounterAnimation = (numberStr) => {
@@ -35,24 +35,31 @@ const useCounterAnimation = (numberStr) => {
   }, []);
 
   useEffect(() => {
-    if (!isVisible) return;
+    if (!isVisible) return undefined;
 
-    const end = parseInt(numberStr.replace(/[^0-9]/g, '')) || 100;
-    if (end === 0) return;
+    const numericPart = numberStr.replace(/[^0-9.]/g, '');
+    const hasDecimal = numericPart.includes('.');
+    const end = hasDecimal ? parseFloat(numericPart) : parseInt(numericPart, 10) || 100;
 
-    let current = 0;
+    if (!end) return undefined;
+
+    const steps = 40;
     const totalDuration = 2000;
-    const incrementTime = Math.max(totalDuration / end, 10);
+    const increment = end / steps;
+    const stepMs = totalDuration / steps;
+    let current = 0;
 
     const timer = setInterval(() => {
-      current += Math.ceil(end / 40);
+      current += increment;
       if (current >= end) {
         setCount(end);
         clearInterval(timer);
+      } else if (hasDecimal) {
+        setCount(Math.round(current * 10) / 10);
       } else {
-        setCount(current);
+        setCount(Math.floor(current));
       }
-    }, incrementTime);
+    }, stepMs);
 
     return () => clearInterval(timer);
   }, [isVisible, numberStr]);

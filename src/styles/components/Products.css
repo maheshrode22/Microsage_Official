@@ -46,15 +46,52 @@
   font-size: clamp(1.25rem, 2vw, 1.5rem);
   font-weight: 700;
   color: #0f172a;
-  margin-bottom: 0.6rem;
+  margin-bottom: 0.35rem;
+}
+
+.product-subtitle {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #2563eb;
+  margin-bottom: 0.5rem;
+}
+
+.product-tagline {
+  font-size: 0.95rem;
+  font-weight: 500;
+  color: #334155;
+  margin-bottom: 0.75rem;
+  line-height: 1.5;
 }
 
 /* Description */
 .product-description {
   font-size: 0.95rem;
   color: #64748b;
-  margin-bottom: 1.25rem;
+  margin-bottom: 0.85rem;
   line-height: 1.7;
+}
+
+.product-description:last-of-type {
+  margin-bottom: 1.25rem;
+}
+
+.product-icon-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.product-icon-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.25rem;
+  height: 2.25rem;
+  border-radius: 10px;
+  background: #eff6ff;
+  color: #2563eb;
+  border: 1px solid #dbeafe;
 }
 
 /* Features list */
@@ -140,17 +177,48 @@
   margin-bottom: 0.25rem;
 }
 
-.visual-box > p {
+.visual-box > p,
+.visual-tagline-line {
   font-size: 0.8rem;
   opacity: 0.85;
+  margin-bottom: 0;
+  line-height: 1.35;
+}
+
+.visual-box > .visual-tagline-line:last-of-type {
   margin-bottom: 0.75rem;
+}
+
+.visual-box-apex {
+  background: linear-gradient(135deg, #0f766e, #2563eb);
 }
 
 .visual-stats {
   display: flex;
   justify-content: space-around;
+  gap: 0.5rem;
   padding-top: 0.75rem;
   border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.visual-stakeholders {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 0.35rem;
+  margin-top: 0.75rem;
+  padding-top: 0.65rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.25);
+}
+
+.visual-stakeholder {
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  color: #ffffff;
 }
 
 .visual-stat {

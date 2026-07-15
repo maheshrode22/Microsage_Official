@@ -108,7 +108,7 @@ const Infrastructure = () => {
                 </div>
                 <div>
                   <h3>APEX</h3>
-                  <p>AI Productivity & Excellence Score</p>
+                  <p>AI Productivity & Excellence Platform</p>
                 </div>
               </div>
               <div className="layer-right">
