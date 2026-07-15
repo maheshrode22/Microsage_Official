@@ -1,0 +1,213 @@
+/* ===== INFRASTRUCTURE SECTION ===== */
+.infrastructure-section {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+.text-purple { color: #8b5cf6; }
+
+/* ===== Stakeholder Cards ===== */
+.infra-stakeholder-card {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 14px;
+  padding: 18px 20px;
+  height: 100%;
+  transition: all 0.3s ease;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.03);
+}
+
+.infra-stakeholder-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.06);
+  border-color: #bfdbfe;
+}
+
+.infra-sh-icon {
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 10px;
+  border-radius: 12px;
+  background: #f1f5f9;
+}
+
+.infra-stakeholder-card:hover .infra-sh-icon {
+  background: #eff6ff;
+}
+
+.infra-stakeholder-card h5 {
+  font-size: clamp(0.9rem, 1.3vw, 1.05rem);
+  font-weight: 700;
+  color: #0f172a;
+  margin-bottom: 2px;
+}
+
+.infra-stakeholder-card p {
+  font-size: clamp(0.78rem, 1vw, 0.88rem);
+  color: #64748b;
+  margin-bottom: 0;
+  line-height: 1.3;
+}
+
+/* ===== Arrow Connector ===== */
+.infra-arrow-down {
+  display: flex;
+  justify-content: center;
+  padding: 12px 0;
+  color: #94a3b8;
+  animation: bounce-down 2s infinite;
+}
+
+@keyframes bounce-down {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(6px); }
+}
+
+/* ===== Layers ===== */
+.infra-layer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 22px 32px;
+  border-radius: 16px;
+  color: white;
+  position: relative;
+  overflow: hidden;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.12);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.infra-layer:hover {
+  transform: scale(1.015);
+  box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+}
+
+.layer-left {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+}
+
+.layer-icon-box {
+  width: 48px;
+  height: 48px;
+  background: rgba(255,255,255,0.2);
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.layer-left h3 {
+  font-size: clamp(1.3rem, 2.2vw, 1.7rem);
+  font-weight: 800;
+  margin-bottom: 2px;
+  letter-spacing: -0.02em;
+}
+
+.layer-left p {
+  margin-bottom: 0;
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  opacity: 0.85;
+}
+
+.layer-right {
+  text-align: right;
+}
+
+.layer-right span {
+  font-size: clamp(0.8rem, 1.2vw, 0.95rem);
+  opacity: 0.9;
+  font-weight: 500;
+}
+
+/* Connector between layers */
+.infra-connector {
+  display: flex;
+  justify-content: center;
+  padding: 6px 0;
+}
+
+.connector-line {
+  width: 2px;
+  height: 20px;
+  background: linear-gradient(180deg, #cbd5e1, #e2e8f0);
+  border-radius: 2px;
+}
+
+/* Layer Gradients */
+.layer-gatetutor {
+  background: linear-gradient(135deg, #2563eb, #1d4ed8);
+}
+
+.layer-pragya {
+  background: linear-gradient(135deg, #7c3aed, #6d28d9);
+}
+
+.layer-apex {
+  background: linear-gradient(135deg, #f59e0b, #d97706);
+}
+
+/* ===== Outcome Block ===== */
+.infra-outcome {
+  background: linear-gradient(135deg, #059669, #047857);
+  color: white;
+  text-align: center;
+  padding: 22px 24px;
+  border-radius: 16px;
+  box-shadow: 0 8px 20px rgba(5, 150, 105, 0.25);
+}
+
+.infra-outcome h4 {
+  font-weight: 800;
+  letter-spacing: 1.5px;
+  margin-bottom: 4px;
+  font-size: clamp(1rem, 1.5vw, 1.2rem);
+}
+
+.infra-outcome p {
+  margin-bottom: 0;
+  opacity: 0.9;
+  font-size: clamp(0.85rem, 1.2vw, 1rem);
+}
+
+/* ===== Responsive ===== */
+@media (max-width: 768px) {
+  .infra-layer {
+    flex-direction: column;
+    text-align: center;
+    border-radius: 14px;
+    padding: 20px 16px;
+    gap: 10px;
+  }
+  .layer-left {
+    flex-direction: column;
+    text-align: center;
+  }
+  .layer-right {
+    text-align: center;
+  }
+  .infra-stakeholder-card {
+    justify-content: center;
+    text-align: center;
+    flex-direction: column;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 576px) {
+  .infra-layer {
+    padding: 18px 14px;
+  }
+  .layer-icon-box {
+    width: 42px;
+    height: 42px;
+  }
+  .infra-outcome {
+    padding: 18px 16px;
+  }
+}

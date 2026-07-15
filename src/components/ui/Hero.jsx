@@ -13,10 +13,7 @@ const Hero = () => {
         <Row className="align-items-center hero-row">
           <Col lg={6} className="hero-left">
             <div className="hero-content">
-              <div className="hero-badge-top">
-                <Rocket size={16} strokeWidth={2.5} />
-                <span>India&apos;s First AI-Powered EdTech &amp; HRTech Platform</span>
-              </div>
+
               <h1 className="hero-title">
                 Transforming Education & Talent Development
               </h1>
