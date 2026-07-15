@@ -69,6 +69,14 @@ const Header = () => {
             >
               Contact
             </Nav.Link>
+            <Nav.Link
+              as={Link}
+              to="/investors"
+              onClick={handleNavigate}
+              className={location.pathname === '/investors' ? 'active' : ''}
+            >
+              Investors
+            </Nav.Link>
             <NavDropdown
               title="Brochures"
               id="brochures-dropdown"

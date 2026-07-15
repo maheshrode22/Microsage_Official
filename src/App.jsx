@@ -20,6 +20,7 @@ import Privacy from './pages/Privacy';
 import NotFound from './pages/NotFound';
 import Login from './pages/Login';
 import Dashboard from './pages/Dashboard';
+import Investors from './pages/Investors';
 
 // UI sections (Home page sections)
 import Hero from './components/ui/Hero';
@@ -62,6 +63,7 @@ const AppContent = () => {
         <Route path="/terms" element={<Terms />} />
         <Route path="/privacy" element={<Privacy />} />
         <Route path="/login" element={<Login />} />
+        <Route path="/investors" element={<Investors />} />
         <Route
           path="/dashboard"
           element={(
