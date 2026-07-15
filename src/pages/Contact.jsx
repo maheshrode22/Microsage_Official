@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { Container, Row, Col, Form, Button, Card, Alert } from 'react-bootstrap';
-import { Globe, Mail, MapPin, Phone } from 'lucide-react';
+import { Mail, MapPin, Phone } from 'lucide-react';
+// eslint-disable-next-line no-unused-vars
+import { Globe } from 'lucide-react';
 import { validateContactForm } from '../utils/formHelpers';
 import { submitContactForm } from '../services/formService';
 import '../styles/components/Contact.css';

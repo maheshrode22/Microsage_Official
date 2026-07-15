@@ -1,7 +1,7 @@
 import React from 'react';
 import { Container, Row, Col, Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { BarChart3, Briefcase, GraduationCap, Rocket } from 'lucide-react';
+import { BarChart3, Briefcase, GraduationCap } from 'lucide-react';
 import '../../styles/components/Hero.css';
 
 const Hero = () => {

@@ -24,8 +24,6 @@ import Investors from './pages/Investors';
 
 // UI sections (Home page sections)
 import Hero from './components/ui/Hero';
-import Stats from './components/ui/Stats';
-import HowItWorks from './components/ui/HowItWorks';
 import Infrastructure from './components/ui/Infrastructure';
 import GrowthEngine from './components/ui/GrowthEngine';
 import LearningTracks from './components/ui/LearningTracks';
