@@ -1,110 +1,111 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import OurEcosystem from '../components/about/OurEcosystem';
 import '../styles/components/About.css';
 
 const About = () => {
   return (
     <section id="about" className="about-section pt-5 pb-4">
-      <Container fluid className="px-4 px-lg-5">
+      <Container fluid className="about-container px-3 px-md-4 px-lg-5">
         {/* Visionary Leader Hero Section */}
-        <Row className="align-items-center mb-5 pb-4 border-bottom">
-          <Col lg={6} className="mb-5 mb-lg-0 pe-lg-5">
-            <h5 className="text-warning fw-bold mb-3">About Us</h5>
-            <h1 className="display-5 fw-bold mb-4 about-hero-title">
-              Meet Our Visionary Leader &ndash; <br />
-              <span className="highlight-text">Mallikarjun Borigidde, CEO of Microsage</span>
-            </h1>
-            <div className="about-hero-text text-muted">
-              <p>
-                At the heart of Microsage is Mallikarjun Borigidde, a dynamic leader driven by the belief that
-                technology can redefine education for everyone. With a sharp entrepreneurial spirit and a
-                passion for innovation, Mallikarjun envisioned GATEtutor as India's premier AI-powered learning and employability system&mdash;connecting students, academia, and industry in one seamless platform.
-              </p>
-              <p>
-                Under his leadership, Microsage has grown from a bold idea into a trailblazing platform
-                empowering education through technology.
-              </p>
-              <p>
-                Mallikarjun's forward-thinking approach gave birth to GATEtutor, the revolutionary system that has
-                transformed how institutions and students interact with career opportunities. His unwavering
-                commitment to creativity, adaptability, and excellence ensures that Microsage never
-                stops evolving&mdash;always staying ahead of the curve.
-              </p>
-              <p>
-                Mallikarjun's mission is clear: to remove barriers, inspire innovation, and make top-notch edu-tech
-                solutions accessible to everyone. His vision continues to steer Microsage toward
-                becoming not just an educational tool, but a movement shaping the future of learning and employability in India.
-              </p>
-            </div>
-          </Col>
-          <Col lg={6}>
-            <div className="founder-hero-image-wrapper shadow-lg rounded-4 overflow-hidden">
+        <div className="leadership-hero mb-5 pb-4 border-bottom">
+          <div className="founder-hero-image-wrapper">
+            <img
+              src={require('../assets/founder-photo.jpg')}
+              alt="Mallikarjun Borigidde"
+              className="w-100 h-100 object-fit-cover founder-hero-image"
+            />
+          </div>
+          <h5 className="leadership-label">Leadership</h5>
+          <h1 className="about-hero-title">
+            <span className="highlight-text">Mallikarjun Borigidde</span>
+          </h1>
+          <p className="leadership-role">Founder &amp; Chief Executive Officer</p>
+          <p className="leadership-company">Microsage Private Limited</p>
+          <p className="leadership-tagline">
+            Leading Microsage&apos;s vision of AI, Digital Education Platforms like GATEtutor.
+          </p>
+          <div className="about-hero-text">
+            <p>
+              At Microsage Private Limited, leadership is driven by a commitment to innovation, purpose, and long-term impact. Under the guidance of Mallikarjun Borigidde, the company has evolved into a technology-driven organization dedicated to transforming education, employability, and digital innovation through intelligent solutions.
+            </p>
+            <p>
+              With a strong entrepreneurial mindset and deep understanding of emerging technologies, Mallikarjun believes that technology should simplify complex challenges and create opportunities for everyone. His vision has shaped Microsage into a company that develops scalable platforms, AI-powered products, enterprise solutions, and digital ecosystems that empower students, educational institutions, businesses, and professionals.
+            </p>
+            <p>
+              One of the company&apos;s flagship initiatives, GATEtutor, reflects this vision by bringing together learning, assessment, skill development, and career opportunities within a single intelligent platform. It represents Microsage&apos;s commitment to building technology that delivers measurable value to users while supporting the evolving needs of education and industry.
+            </p>
+            <p>
+              Beyond products, Mallikarjun has cultivated a culture of continuous learning, innovation, collaboration, and customer-centric thinking. His leadership encourages the team to embrace new ideas, solve real-world problems, and develop solutions that create meaningful impact across multiple domains.
+            </p>
+            <p>
+              Today, Microsage continues to expand its portfolio with advanced technology solutions, AI-driven platforms, enterprise applications, and digital transformation services. Guided by Mallikarjun&apos;s vision, the company remains focused on building a future where innovation drives growth, empowers organizations, and creates lasting value for society.
+            </p>
+          </div>
+        </div>
+        <div className="about-triad mt-4">
+          <div className="about-content">
+            <div className="about-icon-wrapper">
               <img
-                src={require('../assets/founder-photo.jpg')}
-                alt="Mallikarjun Borigidde"
-                className="w-100 h-100 object-fit-cover founder-hero-image"
+                src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
+                alt="Team Collaboration"
+                className="about-image"
               />
             </div>
-          </Col>
-        </Row>
-        <Row className="mt-4">
-          <Col lg={6} className="mb-4">
-            <div className="about-content">
-              <div className="about-icon-wrapper">
-                <img
-                  src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=600&h=400&fit=crop"
-                  alt="Team Collaboration"
-                  className="about-image"
-                />
-
-
-              </div>
+            <div className="about-content-body">
               <h3 className="about-heading text-primary">Our Mission</h3>
               <p>
-                Our mission is to democratize quality education and make employability intelligence
-                accessible to every student across India, regardless of their background or geography.
-                We believe in empowering the next generation of engineers and professionals with the
-                tools they need to succeed in today's competitive world.
+                At Microsage Private Limited, our mission is to accelerate digital transformation in education and enterprise by developing innovative, AI-powered technology solutions that create meaningful and measurable impact. We are committed to empowering students, educational institutions, businesses, and professionals through intelligent digital platforms that enhance learning, strengthen employability, and drive sustainable growth.
               </p>
               <p>
-                At <strong>Microsage Private Limited</strong>, we combine innovation with purpose. Our flagship platform
-                <strong> GATEtutor</strong> is India's first AI-powered learning and employability
-                system designed to bridge the gap between academic preparation and real-world career readiness.
+                By leveraging Artificial Intelligence, advanced analytics, and emerging technologies, we build scalable solutions that bridge the gap between academic excellence and industry expectations. Through our flagship digital education platform, GATEtutor, we deliver personalized learning, intelligent assessments, skill development, and career opportunities within a unified ecosystem designed for the future of education.
               </p>
-
-              <h3 className="about-heading text-primary mt-5">Our Vision</h3>
               <p>
-                We envision a future where every student has access to personalized, AI-driven
-                learning experiences that prepare them not just for exams, but for real-world
-                careers. Our vision is to build a common benchmark for employability that
-                connects academia directly with industry requirements.
+                Innovation at Microsage is driven by purpose. Our goal is to make quality education, technology, and employability solutions more accessible, enabling individuals and organizations to adapt, grow, and thrive in an increasingly digital world. We envision a future where technology empowers every learner, institution, and enterprise to achieve their full potential through continuous innovation and excellence.
               </p>
             </div>
-          </Col>
-          <Col lg={6} className="mb-4">
-            <div className="about-content">
-              <div className="about-icon-wrapper">
-                <img
-                  src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=400&fit=crop"
-                  alt="Nation Building"
-                  className="about-image"
-                />
-              </div>
+          </div>
+
+          <div className="about-content">
+            <div className="about-icon-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=600&h=400&fit=crop"
+                alt="Our Vision"
+                className="about-image"
+              />
+            </div>
+            <div className="about-content-body">
+              <h3 className="about-heading text-primary">Our Vision</h3>
+              <p>
+                At Microsage Private Limited, our vision is to become a global leader in AI-powered technology and digital innovation by building intelligent platforms that redefine the future of education, employability, and enterprise transformation. We envision a connected ecosystem where learning, skill development, workforce readiness, and industry collaborate seamlessly through technology.
+              </p>
+              <p>
+                Through our flagship digital education platform, GATEtutor, and our proprietary AI ecosystem, we aspire to create a unified digital infrastructure that bridges the gap between academia and industry, empowers institutions with intelligent insights, and prepares learners for the careers of tomorrow.
+              </p>
+              <p>
+                Our long-term vision is to establish a trusted, technology-driven benchmark for learning, productivity, and employability, enabling every learner, institution, and organization to unlock their full potential and thrive in an increasingly digital world.
+              </p>
+            </div>
+          </div>
+
+          <div className="about-content">
+            <div className="about-icon-wrapper">
+              <img
+                src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=600&h=400&fit=crop"
+                alt="Nation Building"
+                className="about-image"
+              />
+            </div>
+            <div className="about-content-body">
               <h3 className="about-heading text-success">Building for the Nation</h3>
               <p>
-                We are not just building software—we are building <strong>India's Employability Infrastructure</strong>.
-                As a registered <strong>Startup India</strong> and <strong>MSME certified</strong> company,
-                we are deeply committed to contributing to the nation's growth story.
+                At Microsage Private Limited, we believe technology should create opportunities that extend far beyond software. We are committed to building India&apos;s AI-powered Employability Infrastructure—an intelligent ecosystem that connects education, industry, and innovation to strengthen the nation&apos;s future workforce.
               </p>
               <p>
-                By addressing the massive skill gap in higher education, we are ensuring that India's youth
-                are job-ready from day one. With a rapidly growing network of <strong>200+ institutions</strong> and
-                <strong> 11+ lakh students</strong>, we are creating a systemic impact that elevates the standard of
-                workforce intelligence nationwide.
+                By empowering students with personalized learning, enabling institutions with data-driven decision-making, and helping employers discover future-ready talent, we are creating a common digital foundation that benefits every stakeholder. Through GATEtutor, PragyaAI, and our AI-powered technologies, we are transforming learning outcomes into measurable employability and driving meaningful impact across the education ecosystem.
               </p>
               <p>
-                Our true success is measured not just in revenue, but in the millions of careers we shape,
-                the institutions we empower, and the economic value we unlock for the nation.
+                Our vision extends beyond business growth. We are dedicated to fostering innovation, supporting educational excellence, strengthening industry collaboration, and contributing to India&apos;s journey toward becoming a globally competitive, knowledge-driven economy. Every platform we build, every solution we create, and every innovation we introduce is designed with one purpose—to empower people, accelerate progress, and build a smarter, stronger nation.
               </p>
               <div className="about-badges mt-4">
                 <span className="badge-custom">Startup India</span>
@@ -112,14 +113,16 @@ const About = () => {
                 <span className="badge-custom">Nation First</span>
               </div>
             </div>
-          </Col>
-        </Row>
-        {/* Removed redundant founder card */}
+          </div>
+        </div>
+
+        <OurEcosystem />
+
         <Row className="mt-4">
           <Col lg={12}>
             <div className="company-info">
-              <Row>
-                <Col md={4} className="mb-4">
+              <Row className="g-4">
+                <Col xs={12} md={6} lg={4} className="mb-0">
                   <div className="info-card">
                     <h5>Company Details</h5>
                     <p><strong>CIN:</strong> U72200PN2022PTC213457</p>
@@ -128,7 +131,7 @@ const About = () => {
                     <p><strong>Industry:</strong> Technology, Information and Internet</p>
                   </div>
                 </Col>
-                <Col md={4} className="mb-4">
+                <Col xs={12} md={6} lg={4} className="mb-0">
                   <div className="info-card">
                     <h5>Headquarters</h5>
                     <p>B-303, GARDENIA, TUPE NAGAR</p>
@@ -137,7 +140,7 @@ const About = () => {
                     <p>Maharashtra, India - 411028</p>
                   </div>
                 </Col>
-                <Col md={4} className="mb-4">
+                <Col xs={12} md={6} lg={4} className="mb-0">
                   <div className="info-card">
                     <h5>Contact Information</h5>
                     <p><strong>Phone:</strong> <a href="tel:9960334040">9960334040</a></p>

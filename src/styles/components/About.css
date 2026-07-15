@@ -3,44 +3,97 @@
   background: #ffffff;
 }
 
-/* Hero Section */
+.about-container {
+  width: 100%;
+  max-width: 1320px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/* Hero Section — image floats right; text wraps full-width below it */
+.leadership-hero {
+  display: block;
+  overflow: hidden;
+}
+
+.leadership-label {
+  color: var(--primary-color, #2563eb);
+  font-weight: 700;
+  font-size: clamp(1rem, 1.4vw, 1.15rem);
+  margin-bottom: 0.75rem;
+}
+
 .about-hero-title {
-  color: #0f172a;
-  line-height: 1.2;
+  color: #111111;
+  font-size: clamp(1.75rem, 2.8vw, 2.65rem);
+  font-weight: 800;
+  line-height: 1.25;
+  margin-bottom: 0.85rem;
+  word-wrap: break-word;
 }
 
 .highlight-text {
   position: relative;
-  display: inline-block;
+  display: inline;
   z-index: 1;
+  box-decoration-break: clone;
+  -webkit-box-decoration-break: clone;
 }
 
 .highlight-text::after {
   content: '';
   position: absolute;
-  bottom: 5px;
-  left: 0;
-  width: 100%;
-  height: 12px;
-  background: #fcd34d; /* Yellow/Orange highlight */
+  left: -0.15em;
+  right: -0.15em;
+  bottom: 0.08em;
+  height: 0.42em;
+  background: #93c5fd;
   z-index: -1;
-  border-radius: 4px;
-  transform: rotate(-1deg);
-  opacity: 0.6;
+}
+
+.leadership-role {
+  font-size: clamp(1rem, 1.5vw, 1.15rem);
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 0.25rem;
+}
+
+.leadership-company {
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  font-weight: 700;
+  color: #111111;
+  margin-bottom: 0.75rem;
+}
+
+.leadership-tagline {
+  color: #4b5563;
+  font-size: clamp(0.95rem, 1.3vw, 1.05rem);
+  font-weight: 500;
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
 }
 
 .about-hero-text p {
-  font-size: 1.05rem;
-  line-height: 1.8;
-  color: #475569;
+  font-size: clamp(0.95rem, 1.1vw, 1rem);
+  line-height: 1.75;
+  color: #4b5563;
   margin-bottom: 1rem;
+  max-width: 100%;
+}
+
+.about-hero-text p:last-child {
+  margin-bottom: 0;
 }
 
 .founder-hero-image-wrapper {
-  height: 500px; /* Adjust based on preference */
-  width: 100%;
+  float: right;
+  height: clamp(380px, 42vw, 560px);
+  width: min(42%, 420px);
+  margin: 0 0 1.25rem 2rem;
   position: relative;
-  background: #f8fafc;
+  background: #f3f4f6;
+  border-radius: 0;
+  overflow: hidden;
 }
 
 .founder-hero-image {
@@ -63,9 +116,33 @@
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
 }
 
+.about-triad {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+  width: 100%;
+}
+
+.about-content-body .about-heading {
+  margin-top: 0;
+}
+
+.about-content-body p:last-of-type {
+  margin-bottom: 0;
+}
+
+.about-triad .about-badges {
+  gap: 0.5rem;
+}
+
+.about-triad .badge-custom {
+  padding: 5px 12px;
+  font-size: 0.72rem;
+}
+
 .about-icon-wrapper {
   width: 100%;
-  aspect-ratio: 16 / 7;
+  height: clamp(160px, 18vw, 200px);
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 1.25rem;
@@ -204,12 +281,98 @@
 }
 
 /* ===== RESPONSIVE ===== */
+
+/* Small laptops: 992px – 1199px */
+@media (min-width: 992px) and (max-width: 1199.98px) {
+  .about-container {
+    max-width: 960px;
+  }
+
+  .founder-hero-image-wrapper {
+    width: min(40%, 340px);
+    height: clamp(400px, 46vh, 500px);
+    margin-left: 1.5rem;
+  }
+
+  .about-content {
+    padding: 1.75rem;
+  }
+}
+
+/* Standard laptops: 1200px – 1399px */
+@media (min-width: 1200px) and (max-width: 1399.98px) {
+  .about-container {
+    max-width: 1140px;
+  }
+
+  .founder-hero-image-wrapper {
+    width: min(40%, 380px);
+    height: clamp(460px, 44vh, 540px);
+  }
+}
+
+/* Large laptops / desktops: 1400px+ */
+@media (min-width: 1400px) {
+  .about-container {
+    max-width: 1320px;
+  }
+
+  .founder-hero-image-wrapper {
+    width: min(42%, 420px);
+    height: 560px;
+  }
+}
+
+/* Tablet and below — stack image above text */
+@media (max-width: 991.98px) {
+  .leadership-hero {
+    text-align: center;
+  }
+
+  .founder-hero-image-wrapper {
+    float: none;
+    display: block;
+    width: min(420px, 90%);
+    height: clamp(360px, 52vw, 480px);
+    margin: 0 auto 1.5rem;
+  }
+
+  .about-hero-text p {
+    text-align: left;
+  }
+
+  .about-triad {
+    flex-direction: column;
+  }
+
+  .about-triad .about-content {
+    padding: 1.75rem;
+  }
+
+  .about-triad .about-content p {
+    font-size: 0.95rem;
+  }
+}
+
 @media (max-width: 768px) {
+  .about-section {
+    padding-top: 2rem !important;
+  }
+
   .about-content {
     padding: 1.5rem;
   }
 
   .info-card {
     padding: 1.25rem;
+  }
+
+  .founder-hero-image-wrapper {
+    width: 100%;
+    height: clamp(320px, 70vw, 420px);
+  }
+
+  .leadership-tagline {
+    margin-bottom: 1.25rem;
   }
 }
