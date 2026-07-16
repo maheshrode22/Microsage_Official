@@ -236,7 +236,7 @@ const Investors = () => {
                 <Cpu size={36} />
               </div>
               <div className="highlight-content">
-                <h4>Proprietary AI Layer</h4>
+                <h4>Building Proprietary AI Layer</h4>
                 <p>PragyaAI continuously gathers vast amounts of learning data, creating an unassailable data moat that improves assessment accuracy and personalization over time.</p>
               </div>
             </div>

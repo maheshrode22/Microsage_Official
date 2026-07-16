@@ -24,7 +24,7 @@ const Header = () => {
     >
       <Container fluid className="px-4 px-lg-5">
         <Navbar.Brand as={Link} to="/" onClick={handleNavigate} className="navbar-brand-custom">
-          <Logo height={40} />
+          <Logo height={64} />
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
@@ -87,7 +87,7 @@ const Header = () => {
                 target="_blank"
                 className="dropdown-item-custom"
               >
-                GATetutor brochures
+                GATEtutor Brochures
               </NavDropdown.Item>
               <NavDropdown.Item
                 href="https://drive.google.com/file/d/1dBtOxqmjdHirTAdbP6cAspNMGFE3Fkmq/view?usp=drive_link"

@@ -12,12 +12,16 @@ const Footer = () => {
         <Row>
           <Col lg={4} md={6} className="mb-4">
             <div className="footer-brand">
-              <Logo height={36} className="mb-2" variant="light" />
+              <Logo height={72} className="mb-2" variant="light" />
               <p className="footer-description">
                 Transforming education and talent development in India with AI-powered solutions.
               </p>
               <div className="footer-certifications">
-                <span>Startup India</span>
+                <img
+                  src={`${process.env.PUBLIC_URL}/startup-india.png`}
+                  alt="Startup India"
+                  className="footer-cert-badge"
+                />
                 <span>MSME Certified</span>
               </div>
             </div>
@@ -58,7 +62,7 @@ const Footer = () => {
               </li>
               <li>
                 <span className="footer-icon"><Phone size={16} strokeWidth={2} /></span>
-                <a href="tel:9960334040">9960334040</a>
+                <a href="tel:9325232875">9325232875</a>
               </li>
               <li>
                 <span className="footer-icon"><Mail size={16} strokeWidth={2} /></span>

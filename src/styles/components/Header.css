@@ -20,6 +20,16 @@
   align-items: center;
   text-decoration: none;
   transition: opacity 0.2s ease;
+  line-height: 1;
+  max-height: 72px;
+  overflow: hidden;
+}
+
+.navbar-brand-custom img {
+  max-height: 64px;
+  width: auto;
+  object-fit: contain;
+  object-position: left center;
 }
 
 .navbar-brand-custom:hover {

@@ -20,17 +20,29 @@
 
 .footer-certifications {
   display: flex;
-  gap: 0.5rem;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.footer-cert-badge {
+  height: 36px;
+  width: auto;
+  max-width: 220px;
+  object-fit: contain;
+  display: block;
 }
 
 .footer-certifications span {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
   background: rgba(255, 255, 255, 0.06);
   border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.5);
-  padding: 3px 10px;
-  border-radius: 4px;
-  font-size: 0.7rem;
+  padding: 0 12px;
+  height: 42px;
+  border-radius: 8px;
+  font-size: 0.72rem;
   font-weight: 500;
   letter-spacing: 0.02em;
 }
