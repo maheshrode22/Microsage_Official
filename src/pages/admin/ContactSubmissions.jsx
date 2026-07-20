@@ -1,12 +1,12 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { Alert, Spinner } from 'react-bootstrap';
 import {
   Calendar,
-  ChevronDown,
-  ChevronUp,
+  Eye,
   Mail,
   MessageSquare,
   Phone,
+  X,
 } from 'lucide-react';
 
 const formatDate = (value) => {
@@ -30,7 +30,7 @@ const formatShortDate = (value) => {
 };
 
 const ContactSubmissions = ({ submissions = [], loading = false, error = '' }) => {
-  const [expandedId, setExpandedId] = useState(null);
+  const [selected, setSelected] = useState(null);
 
   const stats = useMemo(() => ({
     total: submissions.length,
@@ -43,9 +43,18 @@ const ContactSubmissions = ({ submissions = [], loading = false, error = '' }) =
     }).length,
   }), [submissions]);
 
-  const toggleExpand = (id) => {
-    setExpandedId((prev) => (prev === id ? null : id));
-  };
+  useEffect(() => {
+    if (!selected) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setSelected(null);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [selected]);
 
   return (
     <div className="contact-subs">
@@ -90,73 +99,160 @@ const ContactSubmissions = ({ submissions = [], loading = false, error = '' }) =
                   <th>Contact</th>
                   <th>Message</th>
                   <th>Received</th>
-                  <th className="text-end" />
+                  <th className="text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
-                {submissions.map((item) => {
-                  const isExpanded = expandedId === item.id;
-                  return (
-                    <React.Fragment key={item.id}>
-                      <tr className={isExpanded ? 'contact-subs-row-expanded' : ''}>
-                        <td>
-                          <div className="contact-subs-sender">
-                            <span className="contact-subs-avatar">
-                              {(item.name || 'A').charAt(0).toUpperCase()}
-                            </span>
-                            <strong>{item.name}</strong>
-                          </div>
-                        </td>
-                        <td>
-                          <div className="contact-subs-contact">
-                            <a href={`mailto:${item.email}`} className="contact-subs-link">
-                              <Mail size={13} strokeWidth={2} />
-                              {item.email}
-                            </a>
-                            {item.phone ? (
-                              <a href={`tel:${item.phone}`} className="contact-subs-link muted">
-                                <Phone size={13} strokeWidth={2} />
-                                {item.phone}
-                              </a>
-                            ) : (
-                              <span className="contact-subs-no-phone">No phone</span>
-                            )}
-                          </div>
-                        </td>
-                        <td>
-                          <p className={`contact-subs-message ${isExpanded ? 'expanded' : ''}`}>
-                            {item.message}
-                          </p>
-                        </td>
-                        <td>
-                          <span className="contact-subs-date" title={formatDate(item.created_at)}>
-                            <Calendar size={13} strokeWidth={2} />
-                            {formatShortDate(item.created_at)}
-                          </span>
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            className="contact-subs-expand-btn"
-                            onClick={() => toggleExpand(item.id)}
-                            title={isExpanded ? 'Collapse' : 'Expand message'}
-                          >
-                            {isExpanded ? (
-                              <ChevronUp size={16} strokeWidth={2} />
-                            ) : (
-                              <ChevronDown size={16} strokeWidth={2} />
-                            )}
-                          </button>
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  );
-                })}
+                {submissions.map((item) => (
+                  <tr key={item.id}>
+                    <td>
+                      <div className="contact-subs-sender">
+                        <span className="contact-subs-avatar">
+                          {(item.name || 'A').charAt(0).toUpperCase()}
+                        </span>
+                        <strong>{item.name}</strong>
+                      </div>
+                    </td>
+                    <td>
+                      <div className="contact-subs-contact">
+                        <a href={`mailto:${item.email}`} className="contact-subs-link">
+                          <Mail size={13} strokeWidth={2} />
+                          {item.email}
+                        </a>
+                        {item.phone ? (
+                          <a href={`tel:${item.phone}`} className="contact-subs-link muted">
+                            <Phone size={13} strokeWidth={2} />
+                            {item.phone}
+                          </a>
+                        ) : (
+                          <span className="contact-subs-no-phone">No phone</span>
+                        )}
+                      </div>
+                    </td>
+                    <td>
+                      <p className="contact-subs-message">{item.message}</p>
+                    </td>
+                    <td>
+                      <span className="contact-subs-date" title={formatDate(item.created_at)}>
+                        <Calendar size={13} strokeWidth={2} />
+                        {formatShortDate(item.created_at)}
+                      </span>
+                    </td>
+                    <td>
+                      <div className="contact-subs-actions">
+                        <button
+                          type="button"
+                          className="contact-subs-view-btn"
+                          onClick={() => setSelected(item)}
+                        >
+                          <Eye size={15} strokeWidth={2} />
+                          View
+                        </button>
+                      </div>
+                    </td>
+                  </tr>
+                ))}
               </tbody>
             </table>
           </div>
         )}
       </div>
+
+      {selected && (
+        <div
+          className="contact-view-overlay"
+          onClick={() => setSelected(null)}
+          role="presentation"
+        >
+          <div
+            className="contact-view-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-view-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="contact-view-header">
+              <div className="contact-view-header-main">
+                <span className="contact-view-avatar">
+                  {(selected.name || 'A').charAt(0).toUpperCase()}
+                </span>
+                <div>
+                  <h3 id="contact-view-title" className="contact-view-title">
+                    {selected.name}
+                  </h3>
+                  <p className="contact-view-subtitle">Contact form submission</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="contact-view-close"
+                onClick={() => setSelected(null)}
+                aria-label="Close"
+              >
+                <X size={18} strokeWidth={2} />
+              </button>
+            </div>
+
+            <div className="contact-view-body">
+              <div className="contact-view-meta">
+                <div className="contact-view-field">
+                  <span className="contact-view-label">Email</span>
+                  <a href={`mailto:${selected.email}`} className="contact-view-value link">
+                    <Mail size={14} strokeWidth={2} />
+                    {selected.email}
+                  </a>
+                </div>
+                <div className="contact-view-field">
+                  <span className="contact-view-label">Phone</span>
+                  {selected.phone ? (
+                    <a href={`tel:${selected.phone}`} className="contact-view-value link">
+                      <Phone size={14} strokeWidth={2} />
+                      {selected.phone}
+                    </a>
+                  ) : (
+                    <span className="contact-view-value muted">Not provided</span>
+                  )}
+                </div>
+                <div className="contact-view-field">
+                  <span className="contact-view-label">Received</span>
+                  <span className="contact-view-value">
+                    <Calendar size={14} strokeWidth={2} />
+                    {formatDate(selected.created_at)}
+                  </span>
+                </div>
+              </div>
+
+              <div className="contact-view-message-block">
+                <span className="contact-view-label">Message</span>
+                <div className="contact-view-message">{selected.message}</div>
+              </div>
+            </div>
+
+            <div className="contact-view-footer">
+              <a
+                href={`mailto:${selected.email}?subject=${encodeURIComponent(`Re: Your message to Microsage`)}`}
+                className="contact-view-action primary"
+              >
+                <Mail size={15} strokeWidth={2} />
+                Reply by Email
+              </a>
+              {selected.phone && (
+                <a href={`tel:${selected.phone}`} className="contact-view-action">
+                  <Phone size={15} strokeWidth={2} />
+                  Call
+                </a>
+              )}
+              <button
+                type="button"
+                className="contact-view-action ghost"
+                onClick={() => setSelected(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

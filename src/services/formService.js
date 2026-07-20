@@ -23,6 +23,20 @@ export const submitJobApplication = async ({
   phone,
   resumeFile,
 }) => {
+  const { data: jobRow, error: jobError } = await supabase
+    .from('job_postings')
+    .select('slug, is_published, is_active')
+    .eq('slug', jobId)
+    .maybeSingle();
+
+  if (jobError) {
+    throw new Error(jobError.message || 'Failed to verify job posting.');
+  }
+
+  if (!jobRow || !jobRow.is_published || !jobRow.is_active) {
+    throw new Error('Applications are closed for this position.');
+  }
+
   const safeName = resumeFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
   const resumePath = `${jobId}/${Date.now()}_${safeName}`;
 

@@ -12,6 +12,9 @@ import {
   fetchJobApplications,
   getResumeDownloadUrl,
   markJobApplicationsAsRead,
+  restoreJobApplication,
+  softDeleteJobApplication,
+  toggleJobApplicationMarked,
 } from '../services/dashboardService';
 import '../styles/components/Dashboard.css';
 
@@ -33,30 +36,34 @@ const Dashboard = () => {
   const [activeTab, setActiveTab] = useState('overview');
   const [contactSubmissions, setContactSubmissions] = useState([]);
   const [jobApplications, setJobApplications] = useState([]);
+  const [deletedJobApplications, setDeletedJobApplications] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
   const unreadJobCount = jobApplications.filter((job) => !job.is_read).length;
 
+  const loadData = async () => {
+    setLoading(true);
+    setError('');
+
+    try {
+      const [contacts, allJobs] = await Promise.all([
+        fetchContactSubmissions(),
+        fetchJobApplications({ includeDeleted: true }),
+      ]);
+      const activeJobs = (allJobs || []).filter((job) => !job.deleted_at);
+      const deletedJobs = (allJobs || []).filter((job) => job.deleted_at);
+      setContactSubmissions(contacts);
+      setJobApplications(activeJobs);
+      setDeletedJobApplications(deletedJobs);
+    } catch (err) {
+      setError(err.message || 'Failed to load dashboard data.');
+    } finally {
+      setLoading(false);
+    }
+  };
+
   useEffect(() => {
-    const loadData = async () => {
-      setLoading(true);
-      setError('');
-
-      try {
-        const [contacts, jobs] = await Promise.all([
-          fetchContactSubmissions(),
-          fetchJobApplications(),
-        ]);
-        setContactSubmissions(contacts);
-        setJobApplications(jobs);
-      } catch (err) {
-        setError(err.message || 'Failed to load dashboard data.');
-      } finally {
-        setLoading(false);
-      }
-    };
-
     loadData();
   }, []);
 
@@ -92,6 +99,41 @@ const Dashboard = () => {
   const handleResumeDownload = async (application) => {
     const signedUrl = await getResumeDownloadUrl(application.resume_path);
     window.open(signedUrl, '_blank', 'noopener,noreferrer');
+  };
+
+  const handleSoftDeleteApplication = async (application) => {
+    await softDeleteJobApplication(application.id);
+    setJobApplications((prev) => prev.filter((job) => job.id !== application.id));
+    setDeletedJobApplications((prev) => [
+      { ...application, deleted_at: new Date().toISOString() },
+      ...prev.filter((job) => job.id !== application.id),
+    ]);
+  };
+
+  const handleRestoreApplication = async (application) => {
+    await restoreJobApplication(application.id);
+    const restored = { ...application, deleted_at: null };
+    setDeletedJobApplications((prev) => prev.filter((job) => job.id !== application.id));
+    setJobApplications((prev) =>
+      [restored, ...prev.filter((job) => job.id !== application.id)].sort(
+        (a, b) => new Date(b.created_at) - new Date(a.created_at)
+      )
+    );
+  };
+
+  const handleToggleMarkedApplication = async (application) => {
+    const nextMarked = !application.is_marked;
+    await toggleJobApplicationMarked(application.id, nextMarked);
+    setJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === application.id ? { ...job, is_marked: nextMarked } : job
+      )
+    );
+    setDeletedJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === application.id ? { ...job, is_marked: nextMarked } : job
+      )
+    );
   };
 
   const renderOverview = () => {
@@ -206,8 +248,12 @@ const Dashboard = () => {
       return (
         <JobApplications
           applications={jobApplications}
+          deletedApplications={deletedJobApplications}
           loading={loading}
           onResumeDownload={handleResumeDownload}
+          onSoftDelete={handleSoftDeleteApplication}
+          onRestore={handleRestoreApplication}
+          onToggleMarked={handleToggleMarkedApplication}
         />
       );
     }

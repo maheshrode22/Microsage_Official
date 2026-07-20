@@ -115,12 +115,26 @@ const ManageJobs = ({ onCountChange }) => {
   const [saving, setSaving] = useState(false);
   const [slugTouched, setSlugTouched] = useState(false);
   const [actionSlug, setActionSlug] = useState(null);
+  const [titleFilter, setTitleFilter] = useState('all');
 
   const stats = useMemo(() => ({
     total: jobs.length,
     published: jobs.filter((j) => j.isPublished).length,
     draft: jobs.filter((j) => !j.isPublished).length,
   }), [jobs]);
+
+  const jobTitles = useMemo(
+    () =>
+      [...new Set(jobs.map((job) => job.title).filter(Boolean))].sort((a, b) =>
+        a.localeCompare(b)
+      ),
+    [jobs]
+  );
+
+  const filteredJobs = useMemo(() => {
+    if (titleFilter === 'all') return jobs;
+    return jobs.filter((job) => job.title === titleFilter);
+  }, [jobs, titleFilter]);
 
   const loadJobs = useCallback(async () => {
     setLoading(true);
@@ -140,6 +154,16 @@ const ManageJobs = ({ onCountChange }) => {
     loadJobs();
   }, [loadJobs]);
 
+  useEffect(() => {
+    if (
+      titleFilter !== 'all' &&
+      jobs.length > 0 &&
+      !jobs.some((job) => job.title === titleFilter)
+    ) {
+      setTitleFilter('all');
+    }
+  }, [jobs, titleFilter]);
+
   const handleFieldChange = (e) => {
     const { name, value, type, checked } = e.target;
     setForm((prev) => {
@@ -154,7 +178,9 @@ const ManageJobs = ({ onCountChange }) => {
 
   const handleSlugChange = (e) => {
     setSlugTouched(true);
-    setForm((prev) => ({ ...prev, slug: e.target.value }));
+    // Keep typed value as-is (e.g. TA → /career/TA), only strip spaces
+    const value = e.target.value.replace(/\s+/g, '');
+    setForm((prev) => ({ ...prev, slug: value }));
     setSuccess('');
   };
 
@@ -192,8 +218,8 @@ const ManageJobs = ({ onCountChange }) => {
         return `${label} is required.`;
       }
     }
-    if (!/^[a-z0-9]+(?:-[a-z0-9]+)*$/.test(form.slug.trim())) {
-      return 'Slug must be lowercase letters, numbers, and hyphens only.';
+    if (!/^[A-Za-z0-9]+(?:-[A-Za-z0-9]+)*$/.test(form.slug.trim())) {
+      return 'Slug can use letters, numbers, and hyphens only (e.g. TA or junior-ml-engineer).';
     }
     return '';
   };
@@ -212,12 +238,17 @@ const ManageJobs = ({ onCountChange }) => {
 
     try {
       const payload = formToJob(form);
+      const slugTaken = jobs.some(
+        (j) =>
+          j.slug.toLowerCase() === payload.slug.toLowerCase() &&
+          (view === 'create' || j.slug !== editingSlug)
+      );
+      if (slugTaken) {
+        setError('A job with this slug already exists. Choose a different slug.');
+        setSaving(false);
+        return;
+      }
       if (view === 'create') {
-        if (jobs.some((j) => j.slug === payload.slug)) {
-          setError('A job with this slug already exists. Choose a different slug.');
-          setSaving(false);
-          return;
-        }
         await createJob(payload);
         setSuccess('Job posted successfully.');
       } else {
@@ -298,8 +329,18 @@ const ManageJobs = ({ onCountChange }) => {
               </Form.Group>
               <Form.Group>
                 <Form.Label>URL Slug *</Form.Label>
-                <Form.Control name="slug" value={form.slug} onChange={handleSlugChange} required disabled={saving} placeholder="junior-ml-engineer" />
-                <Form.Text className="text-muted">Used in the career page URL: /career/{form.slug || 'slug'}</Form.Text>
+                <Form.Control
+                  name="slug"
+                  value={form.slug}
+                  onChange={handleSlugChange}
+                  required
+                  disabled={saving}
+                  placeholder="TA"
+                />
+                <Form.Text className="text-muted">
+                  Career page URL: <strong>/career/{form.slug || 'TA'}</strong>
+                  {' '}— short custom slugs like TA are allowed.
+                </Form.Text>
               </Form.Group>
               <Form.Group>
                 <Form.Label>Designation *</Form.Label>
@@ -388,8 +429,8 @@ const ManageJobs = ({ onCountChange }) => {
                   <input type="checkbox" name="isActive" checked={form.isActive} onChange={handleFieldChange} disabled={saving} />
                   <span className="job-toggle-icon"><CheckCircle2 size={18} /></span>
                   <span className="job-toggle-text">
-                    <strong>Actively Hiring</strong>
-                    <small>Shows &quot;Actively Hiring&quot; badge on job page</small>
+                    <strong>Accepting Applications</strong>
+                    <small>ON = students can apply · OFF = job visible, apply closed</small>
                   </span>
                 </label>
               </div>
@@ -426,10 +467,29 @@ const ManageJobs = ({ onCountChange }) => {
             <span className="manage-jobs-stat-label">Drafts</span>
           </div>
         </div>
-        <Button variant="primary" className="manage-jobs-add-btn" onClick={openCreate}>
-          <Plus size={17} strokeWidth={2.5} />
-          Post New Job
-        </Button>
+        <div className="manage-jobs-toolbar-actions">
+          {jobs.length > 0 && (
+            <Form.Group className="manage-jobs-title-filter mb-0">
+              <Form.Label className="visually-hidden">Filter by Job Title</Form.Label>
+              <Form.Select
+                value={titleFilter}
+                onChange={(e) => setTitleFilter(e.target.value)}
+                aria-label="Filter by Job Title"
+              >
+                <option value="all">All Job Titles</option>
+                {jobTitles.map((title) => (
+                  <option key={title} value={title}>
+                    {title}
+                  </option>
+                ))}
+              </Form.Select>
+            </Form.Group>
+          )}
+          <Button variant="primary" className="manage-jobs-add-btn" onClick={openCreate}>
+            <Plus size={17} strokeWidth={2.5} />
+            Post New Job
+          </Button>
+        </div>
       </div>
 
       {error && <Alert variant="danger" className="manage-jobs-alert">{error}</Alert>}
@@ -450,6 +510,15 @@ const ManageJobs = ({ onCountChange }) => {
               Post New Job
             </Button>
           </div>
+        ) : filteredJobs.length === 0 ? (
+          <div className="manage-jobs-empty">
+            <span className="manage-jobs-empty-icon"><Briefcase size={32} strokeWidth={1.5} /></span>
+            <h4>No jobs match this title</h4>
+            <p>Try selecting a different Job Title from the filter.</p>
+            <Button variant="outline-secondary" onClick={() => setTitleFilter('all')}>
+              Show All Jobs
+            </Button>
+          </div>
         ) : (
           <div className="table-responsive">
             <table className="manage-jobs-table">
@@ -463,7 +532,7 @@ const ManageJobs = ({ onCountChange }) => {
                 </tr>
               </thead>
               <tbody>
-                {jobs.map((job) => (
+                {filteredJobs.map((job) => (
                   <tr key={job.slug}>
                     <td>
                       <div className="manage-jobs-title-cell">
@@ -483,8 +552,10 @@ const ManageJobs = ({ onCountChange }) => {
                         <span className={`job-status-badge ${job.isPublished ? 'published' : 'draft'}`}>
                           {job.isPublished ? 'Published' : 'Draft'}
                         </span>
-                        {job.isActive && (
+                        {job.isActive ? (
                           <span className="job-status-badge active">Hiring</span>
+                        ) : (
+                          <span className="job-status-badge closed">Apply Closed</span>
                         )}
                       </div>
                     </td>

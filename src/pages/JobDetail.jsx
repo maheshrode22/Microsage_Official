@@ -64,6 +64,13 @@ const JobDetail = () => {
 
   const handleApply = async (e) => {
     e.preventDefault();
+    if (!job?.isActive) {
+      setSubmitStatus({
+        type: 'danger',
+        message: 'Applications are closed for this position.',
+      });
+      return;
+    }
     setSubmitStatus(null);
     setIsSubmitting(true);
 
@@ -137,8 +144,10 @@ const JobDetail = () => {
 
             <div className="job-detail-header">
               <div className="job-header-top">
-                {job.isActive && (
+                {job.isActive ? (
                   <span className="job-status-badge">Actively Hiring</span>
+                ) : (
+                  <span className="job-status-badge closed">Applications Closed</span>
                 )}
               </div>
               <h1 className="job-detail-title">{job.title}</h1>
@@ -230,103 +239,115 @@ const JobDetail = () => {
 
           <Col lg={4}>
             <div className="job-sidebar">
-              <div className="job-apply-card">
-                <h4>Apply for this position</h4>
-                <p>Take the next step in your career journey.</p>
-
-                {submitStatus && !showForm && (
-                  <Alert variant={submitStatus.type} className="mb-3">
-                    {submitStatus.message}
-                  </Alert>
-                )}
-
-                {!showForm ? (
-                  <div className="job-apply-buttons">
-                    <button className="job-apply-primary" onClick={() => setShowForm(true)}>
-                      Apply Now
-                    </button>
-                    <a
-                      href={`https://wa.me/${job.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi, I'm interested in the ${job.title} position at Microsage.`)}`}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="job-apply-whatsapp"
-                    >
-                      WhatsApp
-                    </a>
-                  </div>
-                ) : (
+              <div className={`job-apply-card ${!job.isActive ? 'closed' : ''}`}>
+                {job.isActive ? (
                   <>
-                    {submitStatus && (
+                    <h4>Apply for this position</h4>
+                    <p>Take the next step in your career journey.</p>
+
+                    {submitStatus && !showForm && (
                       <Alert variant={submitStatus.type} className="mb-3">
                         {submitStatus.message}
                       </Alert>
                     )}
-                    <Form onSubmit={handleApply} className="job-apply-form">
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          type="text"
-                          name="name"
-                          placeholder="Full Name *"
-                          value={formData.name}
-                          onChange={handleChange}
-                          required
-                          disabled={isSubmitting}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          type="email"
-                          name="email"
-                          placeholder="Email Address *"
-                          value={formData.email}
-                          onChange={handleChange}
-                          required
-                          disabled={isSubmitting}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <Form.Control
-                          type="tel"
-                          name="phone"
-                          placeholder="Phone Number *"
-                          value={formData.phone}
-                          onChange={handleChange}
-                          required
-                          disabled={isSubmitting}
-                        />
-                      </Form.Group>
-                      <Form.Group className="mb-3">
-                        <div className="resume-upload-area">
-                          <label htmlFor="resume-input" className="resume-upload-label">
-                            <Paperclip size={16} strokeWidth={2} className="resume-upload-icon-lucide" />
-                            <span className="resume-upload-text">
-                              {resumeFile ? resumeFile.name : 'Upload Resume (PDF, DOC)'}
-                            </span>
-                            <span className="resume-upload-hint">Max 5MB</span>
-                          </label>
-                          <input
-                            id="resume-input"
-                            type="file"
-                            accept=".pdf,.doc,.docx"
-                            onChange={handleFileChange}
-                            className="resume-file-input"
-                            required
+
+                    {!showForm ? (
+                      <div className="job-apply-buttons">
+                        <button className="job-apply-primary" onClick={() => setShowForm(true)}>
+                          Apply Now
+                        </button>
+                        <a
+                          href={`https://wa.me/${job.whatsapp.replace(/[^0-9]/g, '')}?text=${encodeURIComponent(`Hi, I'm interested in the ${job.title} position at Microsage.`)}`}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="job-apply-whatsapp"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
+                    ) : (
+                      <>
+                        {submitStatus && (
+                          <Alert variant={submitStatus.type} className="mb-3">
+                            {submitStatus.message}
+                          </Alert>
+                        )}
+                        <Form onSubmit={handleApply} className="job-apply-form">
+                          <Form.Group className="mb-3">
+                            <Form.Control
+                              type="text"
+                              name="name"
+                              placeholder="Full Name *"
+                              value={formData.name}
+                              onChange={handleChange}
+                              required
+                              disabled={isSubmitting}
+                            />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Control
+                              type="email"
+                              name="email"
+                              placeholder="Email Address *"
+                              value={formData.email}
+                              onChange={handleChange}
+                              required
+                              disabled={isSubmitting}
+                            />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <Form.Control
+                              type="tel"
+                              name="phone"
+                              placeholder="Phone Number *"
+                              value={formData.phone}
+                              onChange={handleChange}
+                              required
+                              disabled={isSubmitting}
+                            />
+                          </Form.Group>
+                          <Form.Group className="mb-3">
+                            <div className="resume-upload-area">
+                              <label htmlFor="resume-input" className="resume-upload-label">
+                                <Paperclip size={16} strokeWidth={2} className="resume-upload-icon-lucide" />
+                                <span className="resume-upload-text">
+                                  {resumeFile ? resumeFile.name : 'Upload Resume (PDF, DOC)'}
+                                </span>
+                                <span className="resume-upload-hint">Max 5MB</span>
+                              </label>
+                              <input
+                                id="resume-input"
+                                type="file"
+                                accept=".pdf,.doc,.docx"
+                                onChange={handleFileChange}
+                                className="resume-file-input"
+                                required
+                                disabled={isSubmitting}
+                              />
+                            </div>
+                          </Form.Group>
+                          <button type="submit" className="job-apply-primary" disabled={isSubmitting}>
+                            {isSubmitting ? 'Submitting...' : 'Submit Application'}
+                          </button>
+                          <button
+                            type="button"
+                            className="job-apply-cancel"
+                            onClick={handleCancelForm}
                             disabled={isSubmitting}
-                          />
-                        </div>
-                      </Form.Group>
-                      <button type="submit" className="job-apply-primary" disabled={isSubmitting}>
-                        {isSubmitting ? 'Submitting...' : 'Submit Application'}
-                      </button>
-                      <button
-                        type="button"
-                        className="job-apply-cancel"
-                        onClick={handleCancelForm}
-                        disabled={isSubmitting}
-                      >
-                        Cancel
-                      </button>
-                    </Form>
+                          >
+                            Cancel
+                          </button>
+                        </Form>
+                      </>
+                    )}
+                  </>
+                ) : (
+                  <>
+                    <h4>Applications closed</h4>
+                    <p>
+                      This role is listed for visibility, but we are not accepting applications right now.
+                      You can still view the details and contact us for questions.
+                    </p>
                   </>
                 )}
               </div>

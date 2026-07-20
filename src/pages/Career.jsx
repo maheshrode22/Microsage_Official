@@ -66,6 +66,9 @@ const Career = () => {
                   <div className="career-card">
                     <div className="career-card-header">
                       <span className="career-type-badge">{job.type}</span>
+                      {!job.isActive && (
+                        <span className="career-closed-badge">Apply Closed</span>
+                      )}
                     </div>
                     <h4 className="career-title">{job.title}</h4>
                     <p className="career-meta d-flex align-items-center gap-1">

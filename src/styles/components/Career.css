@@ -77,6 +77,11 @@
 }
 
 .career-card-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.5rem;
+  flex-wrap: wrap;
   margin-bottom: 1rem;
 }
 
@@ -89,6 +94,17 @@
   font-size: 0.75rem;
   font-weight: 600;
   letter-spacing: 0.02em;
+}
+
+.career-closed-badge {
+  display: inline-block;
+  background: #fff7ed;
+  color: #9a3412;
+  padding: 4px 12px;
+  border-radius: 50px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  border: 1px solid #fed7aa;
 }
 
 .career-title {
@@ -234,6 +250,12 @@
   font-size: 0.75rem;
   font-weight: 600;
   border: 1px solid #a7f3d0;
+}
+
+.job-status-badge.closed {
+  background: #fff7ed;
+  color: #9a3412;
+  border-color: #fed7aa;
 }
 
 .job-detail-title {
@@ -408,6 +430,11 @@
   margin-bottom: 1rem;
 }
 
+.job-apply-card.closed {
+  background: #fffbeb;
+  border-color: #fde68a;
+}
+
 .job-apply-card h4 {
   font-size: 1.05rem;
   font-weight: 700;
@@ -419,6 +446,11 @@
   color: #94a3b8;
   font-size: 0.8rem;
   margin-bottom: 1.25rem;
+}
+
+.job-apply-card.closed > p {
+  margin-bottom: 0;
+  color: #78716c;
 }
 
 .job-apply-buttons {
