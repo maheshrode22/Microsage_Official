@@ -430,7 +430,7 @@ const ManageJobs = ({ onCountChange }) => {
                   <span className="job-toggle-icon"><CheckCircle2 size={18} /></span>
                   <span className="job-toggle-text">
                     <strong>Accepting Applications</strong>
-                    <small>ON = students can apply · OFF = job visible, apply closed</small>
+                    <small>ON = students can apply · OFF = job visible, Applications closed</small>
                   </span>
                 </label>
               </div>
@@ -555,7 +555,7 @@ const ManageJobs = ({ onCountChange }) => {
                         {job.isActive ? (
                           <span className="job-status-badge active">Hiring</span>
                         ) : (
-                          <span className="job-status-badge closed">Apply Closed</span>
+                          <span className="job-status-badge closed">No Longer Accepting Applications</span>
                         )}
                       </div>
                     </td>

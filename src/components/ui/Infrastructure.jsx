@@ -1,142 +1,129 @@
 import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
-import { Users, Building, Briefcase, Cpu, Award, BookOpen, ArrowDown } from 'lucide-react';
+import { Users, Building2, Briefcase, Cpu, Award, BookOpen, ArrowDown } from 'lucide-react';
 import '../../styles/components/Infrastructure.css';
 
-const Infrastructure = () => {
-  return (
-    <section className="infrastructure-section section-padding bg-white">
-      <Container fluid className="px-4 px-lg-5">
-        
-        {/* Section Header */}
-        <Row className="text-center mb-3">
-          <Col lg={8} className="mx-auto">
-            <h2 className="section-title">Building the Intelligence Infrastructure</h2>
-            <p className="section-subtitle">
-              A unified ecosystem that connects learning, measures potential, and unlocks employability.
-            </p>
-          </Col>
-        </Row>
+const STAKEHOLDERS = [
+  {
+    icon: Users,
+    title: 'Students',
+    text: 'Learn. Grow. Prove readiness.',
+  },
+  {
+    icon: Building2,
+    title: 'Institutions',
+    text: 'Teach. Assess. Elevate outcomes.',
+  },
+  {
+    icon: Briefcase,
+    title: 'Employers',
+    text: 'Discover. Evaluate. Hire the best.',
+  },
+];
 
-        {/* Stakeholders Row */}
-        <Row className="mb-3 g-3 justify-content-center">
-          <Col md={4} sm={6}>
-            <div className="infra-stakeholder-card">
-              <Users className="infra-sh-icon text-primary" size={28} />
-              <div>
-                <h5>Students</h5>
-                <p>Learn. Grow. Prove Readiness.</p>
-              </div>
-            </div>
-          </Col>
-          <Col md={4} sm={6}>
-            <div className="infra-stakeholder-card">
-              <Building className="infra-sh-icon text-purple" size={28} />
-              <div>
-                <h5>Institutions</h5>
-                <p>Teach. Assess. Elevate Outcomes.</p>
-              </div>
-            </div>
-          </Col>
-          <Col md={4} sm={12}>
-            <div className="infra-stakeholder-card">
-              <Briefcase className="infra-sh-icon text-success" size={28} />
-              <div>
-                <h5>Employers</h5>
-                <p>Discover. Evaluate. Hire the Best.</p>
-              </div>
-            </div>
-          </Col>
-        </Row>
+const LAYERS = [
+  {
+    id: 'gatetutor',
+    step: '01',
+    icon: BookOpen,
+    name: 'GATEtutor',
+    role: 'Learning & Assessment Ecosystem',
+    tagline: 'One platform for every stakeholder',
+  },
+  {
+    id: 'pragya',
+    step: '02',
+    icon: Cpu,
+    name: 'PragyaAI',
+    role: 'Proprietary AI Intelligence Layer',
+    tagline: 'Data that predicts. AI that personalises.',
+  },
+  {
+    id: 'apex',
+    step: '03',
+    icon: Award,
+    name: 'APEX',
+    role: 'AI Productivity & Excellence Platform',
+    tagline: 'A common benchmark, industry-aligned',
+  },
+];
 
-        {/* Arrow Down */}
-        <div className="infra-arrow-down">
-          <ArrowDown size={24} />
-        </div>
+const Infrastructure = () => (
+  <section className="infrastructure-section section-padding" id="infrastructure">
+    <Container fluid className="px-4 px-lg-5">
+      <Row className="justify-content-center">
+        <Col lg={8} className="text-center">
+          <p className="infra-eyebrow">Platform Architecture</p>
+          <h2 className="section-title">Building the Intelligence Infrastructure</h2>
+          <p className="section-subtitle infra-subtitle">
+            A unified ecosystem that connects learning, measures potential, and unlocks employability.
+          </p>
+        </Col>
+      </Row>
 
-        {/* 3 Layers */}
-        <Row className="justify-content-center">
-          <Col lg={10}>
-            
-            {/* Layer 1 */}
-            <div className="infra-layer layer-gatetutor">
-              <div className="layer-left">
-                <div className="layer-icon-box">
-                  <BookOpen size={28} />
+      <div className="infra-stakeholders">
+        {STAKEHOLDERS.map(({ icon: Icon, title, text }) => (
+          <div key={title} className="infra-stakeholder">
+            <span className="infra-stakeholder-icon" aria-hidden="true">
+              <Icon size={20} strokeWidth={1.75} />
+            </span>
+            <div>
+              <h3>{title}</h3>
+              <p>{text}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      <div className="infra-flow-hint" aria-hidden="true">
+        <span className="infra-flow-hint-line" />
+        <ArrowDown size={16} strokeWidth={2} />
+        <span>Flows into</span>
+      </div>
+
+      <div className="infra-stack">
+        <div className="infra-stack-rail" aria-hidden="true" />
+
+        {LAYERS.map((layer, index) => {
+          const Icon = layer.icon;
+          return (
+            <React.Fragment key={layer.id}>
+              <article className={`infra-layer infra-layer--${layer.id}`}>
+                <div className="infra-layer-step">{layer.step}</div>
+                <div className="infra-layer-icon" aria-hidden="true">
+                  <Icon size={22} strokeWidth={1.75} />
                 </div>
-                <div>
-                  <h3>GATEtutor</h3>
-                  <p>Learning & Assessment Ecosystem</p>
+                <div className="infra-layer-body">
+                  <div className="infra-layer-copy">
+                    <h3>{layer.name}</h3>
+                    <p>{layer.role}</p>
+                  </div>
+                  <p className="infra-layer-tagline">{layer.tagline}</p>
                 </div>
-              </div>
-              <div className="layer-right">
-                <span>One Platform. All Stakeholders.</span>
-              </div>
-            </div>
+              </article>
+              {index < LAYERS.length - 1 && (
+                <div className="infra-stack-gap" aria-hidden="true" />
+              )}
+            </React.Fragment>
+          );
+        })}
+      </div>
 
-            {/* Connector */}
-            <div className="infra-connector">
-              <div className="connector-line"></div>
-            </div>
+      <div className="infra-flow-hint" aria-hidden="true">
+        <span className="infra-flow-hint-line" />
+        <ArrowDown size={16} strokeWidth={2} />
+        <span>Delivers</span>
+      </div>
 
-            {/* Layer 2 */}
-            <div className="infra-layer layer-pragya">
-              <div className="layer-left">
-                <div className="layer-icon-box">
-                  <Cpu size={28} />
-                </div>
-                <div>
-                  <h3>PragyaAI</h3>
-                  <p>Proprietary AI Intelligence Layer</p>
-                </div>
-              </div>
-              <div className="layer-right">
-                <span>Data That Predicts. AI That Personalises.</span>
-              </div>
-            </div>
-
-            {/* Connector */}
-            <div className="infra-connector">
-              <div className="connector-line"></div>
-            </div>
-
-            {/* Layer 3 */}
-            <div className="infra-layer layer-apex">
-              <div className="layer-left">
-                <div className="layer-icon-box">
-                  <Award size={28} />
-                </div>
-                <div>
-                  <h3>APEX</h3>
-                  <p>AI Productivity & Excellence Platform</p>
-                </div>
-              </div>
-              <div className="layer-right">
-                <span>A Common Benchmark. Industry-Aligned.</span>
-              </div>
-            </div>
-
-          </Col>
-        </Row>
-
-        {/* Arrow Down */}
-        <div className="infra-arrow-down">
-          <ArrowDown size={24} />
-        </div>
-
-        {/* Outcome */}
-        <Row className="justify-content-center">
-          <Col lg={8}>
-            <div className="infra-outcome">
-              <h4>FUTURE-READY WORKFORCE</h4>
-              <p>Stronger Institutions. Smarter Hiring. Greater Impact.</p>
-            </div>
-          </Col>
-        </Row>
-
-      </Container>
-    </section>
-  );
-};
+      <div className="infra-outcome">
+        <p className="infra-outcome-label">Outcome</p>
+        <h3>Future-ready workforce</h3>
+        <p className="infra-outcome-text">
+          Stronger institutions. Smarter hiring. Greater impact.
+        </p>
+      </div>
+    </Container>
+  </section>
+);
 
 export default Infrastructure;

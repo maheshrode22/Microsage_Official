@@ -23,6 +23,8 @@ export const submitJobApplication = async ({
   phone,
   resumeFile,
 }) => {
+  const normalizedEmail = email.trim().toLowerCase();
+
   const { data: jobRow, error: jobError } = await supabase
     .from('job_postings')
     .select('slug, is_published, is_active')
@@ -35,6 +37,38 @@ export const submitJobApplication = async ({
 
   if (!jobRow || !jobRow.is_published || !jobRow.is_active) {
     throw new Error('Applications are closed for this position.');
+  }
+
+  const { data: alreadyApplied, error: checkError } = await supabase.rpc(
+    'has_job_application',
+    {
+      p_job_id: jobId,
+      p_email: normalizedEmail,
+    }
+  );
+
+  if (checkError) {
+    // Fallback if RPC is not deployed yet: direct lookup (may fail under RLS)
+    const { data: existing, error: existingError } = await supabase
+      .from('job_applications')
+      .select('id')
+      .eq('job_id', jobId)
+      .ilike('email', normalizedEmail)
+      .is('deleted_at', null)
+      .limit(1);
+
+    if (existingError) {
+      throw new Error(
+        checkError.message ||
+          'Unable to verify previous applications. Please try again.'
+      );
+    }
+
+    if (existing?.length) {
+      throw new Error('You have already applied for this job.');
+    }
+  } else if (alreadyApplied) {
+    throw new Error('You have already applied for this job.');
   }
 
   const safeName = resumeFile.name.replace(/[^a-zA-Z0-9._-]/g, '_');
@@ -55,7 +89,7 @@ export const submitJobApplication = async ({
     job_id: jobId,
     job_title: jobTitle,
     name: name.trim(),
-    email: email.trim(),
+    email: normalizedEmail,
     phone: phone.trim(),
     resume_path: resumePath,
     resume_name: resumeFile.name,
@@ -63,6 +97,15 @@ export const submitJobApplication = async ({
 
   if (insertError) {
     await supabase.storage.from(RESUMES_BUCKET).remove([resumePath]);
+
+    const isDuplicate =
+      insertError.code === '23505' ||
+      /duplicate|unique/i.test(insertError.message || '');
+
+    if (isDuplicate) {
+      throw new Error('You have already applied for this job.');
+    }
+
     throw new Error(insertError.message || 'Failed to submit application. Please try again.');
   }
 };

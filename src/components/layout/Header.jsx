@@ -47,14 +47,6 @@ const Header = () => {
             </Nav.Link>
             <Nav.Link
               as={Link}
-              to="/services"
-              onClick={handleNavigate}
-              className={location.pathname === '/services' ? 'active' : ''}
-            >
-              Services
-            </Nav.Link>
-            <Nav.Link
-              as={Link}
               to="/products"
               onClick={handleNavigate}
               className={location.pathname === '/products' ? 'active' : ''}

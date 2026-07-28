@@ -26,7 +26,6 @@ import Investors from './pages/Investors';
 import Hero from './components/ui/Hero';
 import Infrastructure from './components/ui/Infrastructure';
 import GrowthEngine from './components/ui/GrowthEngine';
-import LearningTracks from './components/ui/LearningTracks';
 import TrustPanel from './components/ui/TrustPanel';
 import CallToAction from './components/ui/CallToAction';
 
@@ -34,7 +33,6 @@ const HomePage = () => (
   <>
     <Hero />
     <Infrastructure />
-    <LearningTracks />
     <GrowthEngine />
     <TrustPanel />
     <CallToAction />

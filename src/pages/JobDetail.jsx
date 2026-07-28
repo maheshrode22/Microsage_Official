@@ -344,10 +344,7 @@ const JobDetail = () => {
                 ) : (
                   <>
                     <h4>Applications closed</h4>
-                    <p>
-                      This role is listed for visibility, but we are not accepting applications right now.
-                      You can still view the details and contact us for questions.
-                    </p>
+                    
                   </>
                 )}
               </div>
