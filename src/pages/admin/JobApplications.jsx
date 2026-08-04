@@ -1,16 +1,22 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Alert, Form, Spinner } from 'react-bootstrap';
 import {
   Bookmark,
   BookmarkCheck,
   Briefcase,
   Calendar,
+  Check,
+  ChevronDown,
   Download,
+  Eye,
   FileText,
   Mail,
+  Pencil,
   Phone,
+  Plus,
   RotateCcw,
   Trash2,
+  X,
 } from 'lucide-react';
 
 const formatDate = (value) => {
@@ -53,6 +59,7 @@ const JobApplications = ({
   onSoftDelete,
   onRestore,
   onToggleMarked,
+  onUpdateNotes,
 }) => {
   const [downloadingId, setDownloadingId] = useState(null);
   const [actionId, setActionId] = useState(null);
@@ -60,6 +67,44 @@ const JobApplications = ({
   const [localSuccess, setLocalSuccess] = useState('');
   const [filter, setFilter] = useState('all');
   const [titleFilter, setTitleFilter] = useState('all');
+
+  // Actions dropdown state
+  const [openDropdownId, setOpenDropdownId] = useState(null);
+  const dropdownRef = useRef(null);
+
+  // Notes view/edit states
+  const [editingNoteId, setEditingNoteId] = useState(null);
+  const [noteDraft, setNoteDraft] = useState('');
+  const [savingNoteId, setSavingNoteId] = useState(null);
+  const [viewingNoteApplicant, setViewingNoteApplicant] = useState(null);
+
+  // Close dropdown on click outside
+  useEffect(() => {
+    if (!openDropdownId) return undefined;
+    const handleClickOutside = (e) => {
+      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
+        setOpenDropdownId(null);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [openDropdownId]);
+
+  // Handle ESC key for note view modal
+  useEffect(() => {
+    if (!viewingNoteApplicant) return undefined;
+    const onKeyDown = (e) => {
+      if (e.key === 'Escape') setViewingNoteApplicant(null);
+    };
+    document.addEventListener('keydown', onKeyDown);
+    document.body.style.overflow = 'hidden';
+    return () => {
+      document.removeEventListener('keydown', onKeyDown);
+      document.body.style.overflow = '';
+    };
+  }, [viewingNoteApplicant]);
 
   const activeApplications = useMemo(
     () => applications.filter((a) => !a.deleted_at),
@@ -122,7 +167,11 @@ const JobApplications = ({
 
   const handleSoftDelete = async (application) => {
     if (!onSoftDelete) return;
-    if (!window.confirm(`Move application from ${application.name} to Deleted? You can restore it later.`)) {
+    if (
+      !window.confirm(
+        `Move application from ${application.name} to Deleted? You can restore it later.`
+      )
+    ) {
       return;
     }
     setActionId(application.id);
@@ -162,13 +211,45 @@ const JobApplications = ({
     try {
       await onToggleMarked(application);
       setLocalSuccess(
-        application.is_marked ? 'Removed from Marked.' : 'Application marked and kept aside.'
+        application.is_marked
+          ? 'Removed from Marked.'
+          : 'Application marked and kept aside.'
       );
     } catch (err) {
       setLocalError(err.message || 'Failed to update marked status.');
     } finally {
       setActionId(null);
     }
+  };
+
+  const handleStartEditNote = (application) => {
+    setEditingNoteId(application.id);
+    setNoteDraft(application.notes || '');
+  };
+
+  const handleCancelNote = () => {
+    setEditingNoteId(null);
+    setNoteDraft('');
+  };
+
+  const handleSaveNote = async (application) => {
+    if (!onUpdateNotes) return;
+    setSavingNoteId(application.id);
+    setLocalError('');
+    try {
+      await onUpdateNotes(application.id, noteDraft);
+      setEditingNoteId(null);
+      setNoteDraft('');
+      setLocalSuccess('Note updated successfully.');
+    } catch (err) {
+      setLocalError(err.message || 'Failed to save note.');
+    } finally {
+      setSavingNoteId(null);
+    }
+  };
+
+  const handleOpenViewNote = (application) => {
+    setViewingNoteApplicant(application);
   };
 
   const displayError = localError || error;
@@ -314,7 +395,7 @@ const JobApplications = ({
             </h4>
             <p>
               {filter === 'marked'
-                ? 'Use the Mark button on any application to keep it aside for later.'
+                ? 'Use the Mark option on any application to keep it aside for later.'
                 : 'Try switching the Job Title or status filter to see other applications.'}
             </p>
           </div>
@@ -323,17 +404,18 @@ const JobApplications = ({
             <table className="job-apps-table">
               <thead>
                 <tr>
-                  <th>Applicant</th>
-                  <th>Position</th>
-                  <th>Contact</th>
-                  <th>{filter === 'deleted' ? 'Deleted' : 'Applied'}</th>
-                  <th className="text-end">Actions</th>
+                  <th className="job-apps-th-applicant">Applicant</th>
+                  <th className="job-apps-th-position">Position</th>
+                  <th className="job-apps-th-contact">Contact</th>
+                  <th className="job-apps-th-applied">{filter === 'deleted' ? 'Deleted' : 'Applied'}</th>
+                  <th className="job-apps-th-notes">Notes</th>
+                  <th className="job-apps-th-actions text-end">Actions</th>
                 </tr>
               </thead>
               <tbody>
                 {filtered.map((item) => (
                   <tr key={item.id} className={getRowClassName(item)}>
-                    <td>
+                    <td className="job-apps-td-applicant">
                       <div className="job-apps-applicant">
                         <span className={`job-apps-avatar ${item.is_marked ? 'marked' : ''}`}>
                           {(item.name || 'A').charAt(0).toUpperCase()}
@@ -354,13 +436,13 @@ const JobApplications = ({
                         </div>
                       </div>
                     </td>
-                    <td>
+                    <td className="job-apps-td-position">
                       <div className="job-apps-position">
                         <Briefcase size={13} strokeWidth={2} />
                         <span>{item.job_title}</span>
                       </div>
                     </td>
-                    <td>
+                    <td className="job-apps-td-contact">
                       <div className="job-apps-contact">
                         <a href={`mailto:${item.email}`} className="job-apps-contact-link">
                           <Mail size={13} strokeWidth={2} />
@@ -374,7 +456,7 @@ const JobApplications = ({
                         )}
                       </div>
                     </td>
-                    <td>
+                    <td className="job-apps-td-applied">
                       <span
                         className="job-apps-date"
                         title={formatDate(filter === 'deleted' ? item.deleted_at : item.created_at)}
@@ -383,57 +465,179 @@ const JobApplications = ({
                         {formatShortDate(filter === 'deleted' ? item.deleted_at : item.created_at)}
                       </span>
                     </td>
-                    <td>
-                      <div className="job-apps-actions-cell">
-                        {filter !== 'deleted' && (
-                          <button
-                            type="button"
-                            className={`job-apps-mark-btn ${item.is_marked ? 'active' : ''}`}
-                            onClick={() => handleToggleMarked(item)}
-                            disabled={actionId === item.id}
-                            title={item.is_marked ? 'Remove mark' : 'Mark and keep aside'}
+                    <td className="job-apps-notes-cell">
+                      {editingNoteId === item.id ? (
+                        <div className="job-apps-note-edit-box">
+                          <textarea
+                            className="job-apps-note-textarea"
+                            placeholder="Add candidate notes (interview remarks, status)..."
+                            value={noteDraft}
+                            onChange={(e) => setNoteDraft(e.target.value)}
+                            rows={2}
+                            autoFocus
+                          />
+                          <div className="job-apps-note-edit-actions">
+                            <button
+                              type="button"
+                              className="job-apps-note-btn save"
+                              onClick={() => handleSaveNote(item)}
+                              disabled={savingNoteId === item.id}
+                              title="Save note"
+                            >
+                              <Check size={13} strokeWidth={2.5} />
+                              <span>{savingNoteId === item.id ? 'Saving...' : 'Save'}</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="job-apps-note-btn cancel"
+                              onClick={handleCancelNote}
+                              title="Cancel"
+                            >
+                              <X size={13} strokeWidth={2.5} />
+                              <span>Cancel</span>
+                            </button>
+                          </div>
+                        </div>
+                      ) : item.notes ? (
+                        <div className="job-apps-note-view-box">
+                          <div
+                            className="job-apps-note-text"
+                            onClick={() => handleOpenViewNote(item)}
+                            title="Click to view full note"
                           >
-                            {item.is_marked ? (
-                              <BookmarkCheck size={15} strokeWidth={2} />
-                            ) : (
-                              <Bookmark size={15} strokeWidth={2} />
-                            )}
-                            {item.is_marked ? 'Marked' : 'Mark'}
-                          </button>
-                        )}
+                            {item.notes}
+                          </div>
+                          <div className="job-apps-note-actions">
+                            <button
+                              type="button"
+                              className="job-apps-note-action-btn view"
+                              onClick={() => handleOpenViewNote(item)}
+                              title="View full note"
+                            >
+                              <Eye size={12} strokeWidth={2} />
+                              <span>View</span>
+                            </button>
+                            <button
+                              type="button"
+                              className="job-apps-note-action-btn edit"
+                              onClick={() => handleStartEditNote(item)}
+                              title="Edit note"
+                            >
+                              <Pencil size={12} strokeWidth={2} />
+                              <span>Edit</span>
+                            </button>
+                          </div>
+                        </div>
+                      ) : (
                         <button
                           type="button"
-                          className="job-apps-download-btn"
-                          onClick={() => handleDownload(item)}
-                          disabled={downloadingId === item.id || !item.resume_path}
-                          title="Download resume"
+                          className="job-apps-add-note-btn"
+                          onClick={() => handleStartEditNote(item)}
+                          title="Add candidate note"
                         >
-                          <Download size={15} strokeWidth={2} />
-                          {downloadingId === item.id ? 'Opening...' : 'Resume'}
+                          <Plus size={13} strokeWidth={2} />
+                          <span>Add Note</span>
                         </button>
-                        {filter === 'deleted' ? (
+                      )}
+                    </td>
+                    <td className="job-apps-td-actions">
+                      <div className="job-apps-actions-cell">
+                        <div
+                          className="job-apps-dropdown"
+                          ref={openDropdownId === item.id ? dropdownRef : null}
+                        >
                           <button
                             type="button"
-                            className="job-apps-restore-btn"
-                            onClick={() => handleRestore(item)}
-                            disabled={actionId === item.id}
-                            title="Restore application"
+                            className={`job-apps-dropdown-toggle ${openDropdownId === item.id ? 'active' : ''}`}
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              setOpenDropdownId(openDropdownId === item.id ? null : item.id);
+                            }}
+                            aria-expanded={openDropdownId === item.id}
+                            title="Actions menu"
                           >
-                            <RotateCcw size={15} strokeWidth={2} />
-                            {actionId === item.id ? 'Restoring...' : 'Restore'}
+                            <span>Actions</span>
+                            <ChevronDown
+                              size={14}
+                              strokeWidth={2}
+                              className={`job-apps-dropdown-arrow ${openDropdownId === item.id ? 'open' : ''}`}
+                            />
                           </button>
-                        ) : (
-                          <button
-                            type="button"
-                            className="job-apps-delete-btn"
-                            onClick={() => handleSoftDelete(item)}
-                            disabled={actionId === item.id}
-                            title="Soft delete application"
-                          >
-                            <Trash2 size={15} strokeWidth={2} />
-                            {actionId === item.id ? 'Deleting...' : 'Delete'}
-                          </button>
-                        )}
+
+                          {openDropdownId === item.id && (
+                            <div
+                              className="job-apps-dropdown-menu"
+                              onClick={(e) => e.stopPropagation()}
+                            >
+                              {filter !== 'deleted' && (
+                                <button
+                                  type="button"
+                                  className={`job-apps-dropdown-item ${item.is_marked ? 'active' : ''}`}
+                                  onClick={() => {
+                                    setOpenDropdownId(null);
+                                    handleToggleMarked(item);
+                                  }}
+                                  disabled={actionId === item.id}
+                                >
+                                  {item.is_marked ? (
+                                    <>
+                                      <BookmarkCheck size={15} strokeWidth={2} className="marked" />
+                                      <span>Marked</span>
+                                    </>
+                                  ) : (
+                                    <>
+                                      <Bookmark size={15} strokeWidth={2} />
+                                      <span>Mark</span>
+                                    </>
+                                  )}
+                                </button>
+                              )}
+
+                              <button
+                                type="button"
+                                className="job-apps-dropdown-item"
+                                onClick={() => {
+                                  setOpenDropdownId(null);
+                                  handleDownload(item);
+                                }}
+                                disabled={downloadingId === item.id || !item.resume_path}
+                              >
+                                <Download size={15} strokeWidth={2} className="resume" />
+                                <span>{downloadingId === item.id ? 'Opening...' : 'Resume'}</span>
+                              </button>
+
+                              <div className="job-apps-dropdown-divider" />
+
+                              {filter === 'deleted' ? (
+                                <button
+                                  type="button"
+                                  className="job-apps-dropdown-item restore"
+                                  onClick={() => {
+                                    setOpenDropdownId(null);
+                                    handleRestore(item);
+                                  }}
+                                  disabled={actionId === item.id}
+                                >
+                                  <RotateCcw size={15} strokeWidth={2} className="restore" />
+                                  <span>{actionId === item.id ? 'Restoring...' : 'Restore'}</span>
+                                </button>
+                              ) : (
+                                <button
+                                  type="button"
+                                  className="job-apps-dropdown-item danger"
+                                  onClick={() => {
+                                    setOpenDropdownId(null);
+                                    handleSoftDelete(item);
+                                  }}
+                                  disabled={actionId === item.id}
+                                >
+                                  <Trash2 size={15} strokeWidth={2} className="danger" />
+                                  <span>{actionId === item.id ? 'Deleting...' : 'Delete'}</span>
+                                </button>
+                              )}
+                            </div>
+                          )}
+                        </div>
                       </div>
                     </td>
                   </tr>
@@ -443,6 +647,76 @@ const JobApplications = ({
           </div>
         )}
       </div>
+
+      {/* Full Note View / Modal */}
+      {viewingNoteApplicant && (
+        <div
+          className="contact-view-overlay"
+          onClick={() => setViewingNoteApplicant(null)}
+          role="presentation"
+        >
+          <div
+            className="contact-view-modal job-apps-note-modal"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="note-view-title"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="contact-view-header">
+              <div className="contact-view-header-main">
+                <span className={`job-apps-avatar ${viewingNoteApplicant.is_marked ? 'marked' : ''}`}>
+                  {(viewingNoteApplicant.name || 'A').charAt(0).toUpperCase()}
+                </span>
+                <div>
+                  <h3 id="note-view-title" className="contact-view-title">
+                    {viewingNoteApplicant.name}
+                  </h3>
+                  <p className="contact-view-subtitle">{viewingNoteApplicant.job_title}</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                className="contact-view-close"
+                onClick={() => setViewingNoteApplicant(null)}
+                aria-label="Close"
+              >
+                <X size={18} strokeWidth={2} />
+              </button>
+            </div>
+
+            <div className="contact-view-body">
+              <div className="job-apps-note-modal-content">
+                <span className="contact-view-label">Candidate Notes</span>
+                <div className="job-apps-note-modal-text">
+                  {viewingNoteApplicant.notes}
+                </div>
+              </div>
+            </div>
+
+            <div className="contact-view-footer">
+              <button
+                type="button"
+                className="contact-view-action primary"
+                onClick={() => {
+                  const applicant = viewingNoteApplicant;
+                  setViewingNoteApplicant(null);
+                  handleStartEditNote(applicant);
+                }}
+              >
+                <Pencil size={15} strokeWidth={2} />
+                Edit Note
+              </button>
+              <button
+                type="button"
+                className="contact-view-action ghost"
+                onClick={() => setViewingNoteApplicant(null)}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -961,7 +961,7 @@
 .job-apps-table {
   width: 100%;
   margin: 0;
-  font-size: 0.9rem;
+  font-size: 0.86rem;
   border-collapse: collapse;
 }
 
@@ -969,19 +969,37 @@
   background: #f8fafc;
   color: #64748b;
   font-weight: 600;
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   text-transform: uppercase;
   letter-spacing: 0.04em;
-  padding: 0.85rem 1.25rem;
+  padding: 0.75rem 0.8rem;
   border-bottom: 1px solid #e2e8f0;
   white-space: nowrap;
 }
 
+.job-apps-table thead th.job-apps-th-applicant {
+  padding-left: 1.15rem;
+}
+
+.job-apps-table thead th.job-apps-th-actions {
+  padding-right: 1.15rem;
+  text-align: right;
+}
+
 .job-apps-table tbody td {
-  padding: 1rem 1.25rem;
+  padding: 0.75rem 0.8rem;
   border-bottom: 1px solid #f1f5f9;
   vertical-align: middle;
   color: #334155;
+}
+
+.job-apps-table tbody td.job-apps-td-applicant {
+  padding-left: 1.15rem;
+}
+
+.job-apps-table tbody td.job-apps-td-actions {
+  padding-right: 1.15rem;
+  text-align: right;
 }
 
 .job-apps-table tbody tr:last-child td {
@@ -1003,19 +1021,19 @@
 .job-apps-applicant {
   display: flex;
   align-items: center;
-  gap: 0.75rem;
+  gap: 0.65rem;
 }
 
 .job-apps-avatar {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 2.35rem;
-  height: 2.35rem;
-  border-radius: 10px;
+  width: 2.15rem;
+  height: 2.15rem;
+  border-radius: 8px;
   background: linear-gradient(135deg, #eff6ff, #dbeafe);
   color: #2563eb;
-  font-size: 0.9rem;
+  font-size: 0.85rem;
   font-weight: 700;
   flex-shrink: 0;
 }
@@ -1023,23 +1041,27 @@
 .job-apps-applicant-info {
   display: flex;
   flex-direction: column;
-  gap: 0.2rem;
+  gap: 0.15rem;
   min-width: 0;
+  max-width: 190px;
 }
 
 .job-apps-applicant-info strong {
   color: #0f172a;
   font-weight: 600;
-  font-size: 0.92rem;
+  font-size: 0.88rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .job-apps-resume-name {
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  font-size: 0.75rem;
+  gap: 0.25rem;
+  font-size: 0.72rem;
   color: #94a3b8;
-  max-width: 180px;
+  max-width: 165px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1048,11 +1070,11 @@
 .job-apps-position {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
+  gap: 0.35rem;
   color: #475569;
-  font-size: 0.88rem;
+  font-size: 0.82rem;
   font-weight: 500;
-  max-width: 220px;
+  max-width: 175px;
 }
 
 .job-apps-position span {
@@ -1064,18 +1086,18 @@
 .job-apps-contact {
   display: flex;
   flex-direction: column;
-  gap: 0.3rem;
+  gap: 0.2rem;
 }
 
 .job-apps-contact-link {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   color: #2563eb;
   text-decoration: none;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   font-weight: 500;
-  max-width: 200px;
+  max-width: 175px;
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -1091,8 +1113,8 @@
 
 .job-apps-badge {
   display: inline-block;
-  padding: 0.2rem 0.6rem;
-  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  font-size: 0.68rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.04em;
@@ -1112,9 +1134,9 @@
 .job-apps-date {
   display: inline-flex;
   align-items: center;
-  gap: 0.35rem;
+  gap: 0.3rem;
   color: #64748b;
-  font-size: 0.84rem;
+  font-size: 0.8rem;
   white-space: nowrap;
 }
 
@@ -1123,80 +1145,350 @@
   justify-content: flex-end;
 }
 
-.job-apps-actions-cell {
-  display: flex;
-  align-items: center;
-  justify-content: flex-end;
-  gap: 0.45rem;
-  flex-wrap: wrap;
+.job-apps-th-notes {
+  min-width: 130px;
+  max-width: 185px;
 }
 
-.job-apps-download-btn {
+.job-apps-notes-cell {
+  min-width: 130px;
+  max-width: 185px;
+  vertical-align: middle;
+}
+
+.job-apps-add-note-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid #e2e8f0;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #2563eb;
-  font-size: 0.82rem;
+  gap: 0.3rem;
+  padding: 0.3rem 0.65rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 7px;
+  background: #f8fafc;
+  color: #475569;
+  font-size: 0.76rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
   white-space: nowrap;
 }
 
-.job-apps-download-btn:hover:not(:disabled) {
-  border-color: #93c5fd;
+.job-apps-add-note-btn:hover {
+  border-color: #3b82f6;
+  background: #eff6ff;
+  color: #2563eb;
+}
+
+.job-apps-note-view-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 7px;
+  padding: 0.35rem 0.5rem;
+  transition: border-color 0.15s ease;
+  max-width: 185px;
+}
+
+.job-apps-note-view-box:hover {
+  border-color: #cbd5e1;
+}
+
+.job-apps-note-text {
+  font-size: 0.78rem;
+  color: #334155;
+  line-height: 1.3;
+  max-height: 2.4rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  cursor: pointer;
+  word-break: break-word;
+}
+
+.job-apps-note-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.job-apps-note-action-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.2rem;
+  padding: 0.12rem 0.38rem;
+  border: 1px solid transparent;
+  border-radius: 5px;
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  background: transparent;
+  transition: all 0.15s ease;
+}
+
+.job-apps-note-action-btn.view {
+  color: #2563eb;
   background: #eff6ff;
 }
 
-.job-apps-download-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.job-apps-note-action-btn.view:hover {
+  background: #dbeafe;
 }
 
-.job-apps-delete-btn,
-.job-apps-restore-btn {
+.job-apps-note-action-btn.edit {
+  color: #475569;
+  background: #f1f5f9;
+}
+
+.job-apps-note-action-btn.edit:hover {
+  background: #e2e8f0;
+  color: #1e293b;
+}
+
+.job-apps-note-edit-box {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  min-width: 160px;
+}
+
+.job-apps-note-textarea {
+  width: 100%;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.78rem;
+  line-height: 1.3;
+  color: #0f172a;
+  background: #ffffff;
+  border: 1.5px solid #3b82f6;
+  border-radius: 7px;
+  outline: none;
+  resize: vertical;
+  min-height: 48px;
+  box-shadow: 0 0 0 3px rgba(59, 130, 246, 0.12);
+  font-family: inherit;
+}
+
+.job-apps-note-edit-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.job-apps-note-btn {
   display: inline-flex;
   align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border-radius: 8px;
-  font-size: 0.82rem;
+  gap: 0.25rem;
+  padding: 0.2rem 0.5rem;
+  border-radius: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  cursor: pointer;
+  border: none;
+  transition: all 0.15s ease;
+}
+
+.job-apps-note-btn.save {
+  background: #2563eb;
+  color: #ffffff;
+}
+
+.job-apps-note-btn.save:hover:not(:disabled) {
+  background: #1d4ed8;
+}
+
+.job-apps-note-btn.cancel {
+  background: #f1f5f9;
+  color: #64748b;
+}
+
+.job-apps-note-btn.cancel:hover {
+  background: #e2e8f0;
+  color: #334155;
+}
+
+/* Actions Dropdown Menu Styles */
+.job-apps-th-actions {
+  min-width: 105px;
+  width: 110px;
+}
+
+.job-apps-td-actions {
+  min-width: 105px;
+  width: 110px;
+}
+
+.job-apps-actions-cell {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.job-apps-dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.job-apps-dropdown-toggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+  padding: 0.38rem 0.75rem;
+  border: 1px solid #d1d5db;
+  border-radius: 7px;
+  background: #ffffff;
+  color: #1e293b;
+  font-size: 0.8rem;
   font-weight: 600;
   cursor: pointer;
   transition: all 0.15s ease;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04);
   white-space: nowrap;
 }
 
-.job-apps-delete-btn {
-  border: 1px solid #fecaca;
-  background: #ffffff;
-  color: #dc2626;
+.job-apps-dropdown-toggle:hover,
+.job-apps-dropdown-toggle.active {
+  border-color: #3b82f6;
+  background: #f8fafc;
+  color: #2563eb;
 }
 
-.job-apps-delete-btn:hover:not(:disabled) {
-  border-color: #fca5a5;
-  background: #fef2f2;
+.job-apps-dropdown-arrow {
+  transition: transform 0.2s ease;
+  color: #64748b;
 }
 
-.job-apps-restore-btn {
-  border: 1px solid #bbf7d0;
+.job-apps-dropdown-arrow.open {
+  transform: rotate(180deg);
+  color: #2563eb;
+}
+
+.job-apps-dropdown-menu {
+  position: absolute;
+  top: calc(100% + 4px);
+  right: 0;
+  min-width: 160px;
   background: #ffffff;
+  border: 1px solid #e2e8f0;
+  border-radius: 9px;
+  box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.15), 0 8px 10px -6px rgba(15, 23, 42, 0.1);
+  padding: 0.35rem;
+  z-index: 100;
+  animation: dropdownFadeIn 0.15s ease forwards;
+}
+
+@keyframes dropdownFadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.job-apps-dropdown-item {
+  display: flex;
+  align-items: center;
+  gap: 0.55rem;
+  width: 100%;
+  padding: 0.5rem 0.75rem;
+  border: none;
+  background: transparent;
+  border-radius: 6px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  color: #334155;
+  text-align: left;
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.job-apps-dropdown-item:hover:not(:disabled) {
+  background: #f1f5f9;
+  color: #0f172a;
+}
+
+.job-apps-dropdown-item:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+}
+
+.job-apps-dropdown-item.active {
+  color: #b45309;
+  background: #fef3c7;
+}
+
+.job-apps-dropdown-item.restore {
   color: #15803d;
 }
 
-.job-apps-restore-btn:hover:not(:disabled) {
-  border-color: #86efac;
+.job-apps-dropdown-item.restore:hover:not(:disabled) {
   background: #f0fdf4;
+  color: #166534;
 }
 
-.job-apps-delete-btn:disabled,
-.job-apps-restore-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
+.job-apps-dropdown-item.danger {
+  color: #dc2626;
+}
+
+.job-apps-dropdown-item.danger:hover:not(:disabled) {
+  background: #fef2f2;
+  color: #b91c1c;
+}
+
+.job-apps-dropdown-icon {
+  flex-shrink: 0;
+}
+
+.job-apps-dropdown-icon.marked {
+  color: #d97706;
+}
+
+.job-apps-dropdown-icon.resume {
+  color: #2563eb;
+}
+
+.job-apps-dropdown-icon.danger {
+  color: #dc2626;
+}
+
+.job-apps-dropdown-icon.restore {
+  color: #16a34a;
+}
+
+.job-apps-dropdown-divider {
+  height: 1px;
+  background: #e2e8f0;
+  margin: 0.3rem 0;
+}
+
+/* Note Modal Styles */
+.job-apps-note-modal {
+  max-width: 500px;
+}
+
+.job-apps-note-modal-content {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.job-apps-note-modal-text {
+  background: #f8fafc;
+  border: 1px solid #e2e8f0;
+  border-radius: 8px;
+  padding: 0.85rem 1rem;
+  font-size: 0.9rem;
+  color: #1e293b;
+  line-height: 1.5;
+  white-space: pre-wrap;
+  word-break: break-word;
+  max-height: 300px;
+  overflow-y: auto;
 }
 
 .job-apps-row-deleted {
@@ -1230,37 +1522,6 @@
   vertical-align: middle;
 }
 
-.job-apps-mark-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.4rem 0.85rem;
-  border: 1px solid #fde68a;
-  border-radius: 8px;
-  background: #ffffff;
-  color: #b45309;
-  font-size: 0.82rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.15s ease;
-  white-space: nowrap;
-}
-
-.job-apps-mark-btn:hover:not(:disabled) {
-  border-color: #fbbf24;
-  background: #fffbeb;
-}
-
-.job-apps-mark-btn.active {
-  background: #fef3c7;
-  border-color: #f59e0b;
-  color: #92400e;
-}
-
-.job-apps-mark-btn:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-}
 
 .job-apps-filter-count.muted {
   background: #94a3b8;

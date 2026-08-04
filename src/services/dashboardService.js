@@ -93,3 +93,15 @@ export const markJobApplicationsAsRead = async (ids) => {
     throw new Error(error.message || 'Failed to mark applications as read.');
   }
 };
+
+export const updateJobApplicationNotes = async (id, notes) => {
+  const { error } = await supabase
+    .from('job_applications')
+    .update({ notes: notes || null })
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(error.message || 'Failed to update application notes.');
+  }
+};
+

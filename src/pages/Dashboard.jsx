@@ -15,8 +15,30 @@ import {
   restoreJobApplication,
   softDeleteJobApplication,
   toggleJobApplicationMarked,
+  updateJobApplicationNotes,
 } from '../services/dashboardService';
 import '../styles/components/Dashboard.css';
+
+const getStoredNote = (id) => {
+  try {
+    return localStorage.getItem(`ms_job_app_note_${id}`) || '';
+  } catch {
+    return '';
+  }
+};
+
+const setStoredNote = (id, note) => {
+  try {
+    if (note) {
+      localStorage.setItem(`ms_job_app_note_${id}`, note);
+    } else {
+      localStorage.removeItem(`ms_job_app_note_${id}`);
+    }
+  } catch {
+    // Ignore storage quota errors
+  }
+};
+
 
 const formatDate = (value) => {
   if (!value) return '-';
@@ -51,8 +73,16 @@ const Dashboard = () => {
         fetchContactSubmissions(),
         fetchJobApplications({ includeDeleted: true }),
       ]);
-      const activeJobs = (allJobs || []).filter((job) => !job.deleted_at);
-      const deletedJobs = (allJobs || []).filter((job) => job.deleted_at);
+      const activeJobs = (allJobs || []).map((job) => ({
+        ...job,
+        notes: job.notes ?? getStoredNote(job.id),
+      })).filter((job) => !job.deleted_at);
+
+      const deletedJobs = (allJobs || []).map((job) => ({
+        ...job,
+        notes: job.notes ?? getStoredNote(job.id),
+      })).filter((job) => job.deleted_at);
+
       setContactSubmissions(contacts);
       setJobApplications(activeJobs);
       setDeletedJobApplications(deletedJobs);
@@ -135,6 +165,29 @@ const Dashboard = () => {
       )
     );
   };
+
+  const handleUpdateNotesApplication = async (applicationId, notes) => {
+    const trimmedNotes = notes?.trim() || '';
+    setStoredNote(applicationId, trimmedNotes);
+
+    setJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === applicationId ? { ...job, notes: trimmedNotes } : job
+      )
+    );
+    setDeletedJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === applicationId ? { ...job, notes: trimmedNotes } : job
+      )
+    );
+
+    try {
+      await updateJobApplicationNotes(applicationId, trimmedNotes);
+    } catch (err) {
+      console.warn('Note saved to local cache:', err.message);
+    }
+  };
+
 
   const renderOverview = () => {
     if (loading) {
@@ -254,6 +307,7 @@ const Dashboard = () => {
           onSoftDelete={handleSoftDeleteApplication}
           onRestore={handleRestoreApplication}
           onToggleMarked={handleToggleMarkedApplication}
+          onUpdateNotes={handleUpdateNotesApplication}
         />
       );
     }
