@@ -8,7 +8,6 @@ import {
   Check,
   ChevronDown,
   Download,
-  Eye,
   FileText,
   Mail,
   Pencil,
@@ -72,11 +71,11 @@ const JobApplications = ({
   const [openDropdownId, setOpenDropdownId] = useState(null);
   const dropdownRef = useRef(null);
 
-  // Notes view/edit states
-  const [editingNoteId, setEditingNoteId] = useState(null);
+  // Notes modal state
+  const [noteModalApplicant, setNoteModalApplicant] = useState(null);
+  const [noteModalEditing, setNoteModalEditing] = useState(false);
   const [noteDraft, setNoteDraft] = useState('');
   const [savingNoteId, setSavingNoteId] = useState(null);
-  const [viewingNoteApplicant, setViewingNoteApplicant] = useState(null);
 
   // Close dropdown on click outside
   useEffect(() => {
@@ -92,11 +91,15 @@ const JobApplications = ({
     };
   }, [openDropdownId]);
 
-  // Handle ESC key for note view modal
+  // Handle ESC key for note modal
   useEffect(() => {
-    if (!viewingNoteApplicant) return undefined;
+    if (!noteModalApplicant) return undefined;
     const onKeyDown = (e) => {
-      if (e.key === 'Escape') setViewingNoteApplicant(null);
+      if (e.key === 'Escape') {
+        setNoteModalApplicant(null);
+        setNoteModalEditing(false);
+        setNoteDraft('');
+      }
     };
     document.addEventListener('keydown', onKeyDown);
     document.body.style.overflow = 'hidden';
@@ -104,7 +107,7 @@ const JobApplications = ({
       document.removeEventListener('keydown', onKeyDown);
       document.body.style.overflow = '';
     };
-  }, [viewingNoteApplicant]);
+  }, [noteModalApplicant]);
 
   const activeApplications = useMemo(
     () => applications.filter((a) => !a.deleted_at),
@@ -222,34 +225,33 @@ const JobApplications = ({
     }
   };
 
-  const handleStartEditNote = (application) => {
-    setEditingNoteId(application.id);
+  const handleOpenNoteModal = (application, startInEdit = false) => {
+    setNoteModalApplicant(application);
     setNoteDraft(application.notes || '');
+    setNoteModalEditing(startInEdit || !application.notes);
   };
 
-  const handleCancelNote = () => {
-    setEditingNoteId(null);
+  const handleCloseNoteModal = () => {
+    setNoteModalApplicant(null);
+    setNoteModalEditing(false);
     setNoteDraft('');
   };
 
-  const handleSaveNote = async (application) => {
-    if (!onUpdateNotes) return;
-    setSavingNoteId(application.id);
+  const handleSaveNote = async () => {
+    if (!onUpdateNotes || !noteModalApplicant) return;
+    setSavingNoteId(noteModalApplicant.id);
     setLocalError('');
     try {
-      await onUpdateNotes(application.id, noteDraft);
-      setEditingNoteId(null);
-      setNoteDraft('');
-      setLocalSuccess('Note updated successfully.');
+      await onUpdateNotes(noteModalApplicant.id, noteDraft);
+      setNoteModalEditing(false);
+      setLocalSuccess('Note saved successfully.');
+      // Update the local reference so the modal shows fresh content
+      setNoteModalApplicant((prev) => prev ? { ...prev, notes: noteDraft } : null);
     } catch (err) {
       setLocalError(err.message || 'Failed to save note.');
     } finally {
       setSavingNoteId(null);
     }
-  };
-
-  const handleOpenViewNote = (application) => {
-    setViewingNoteApplicant(application);
   };
 
   const displayError = localError || error;
@@ -466,73 +468,21 @@ const JobApplications = ({
                       </span>
                     </td>
                     <td className="job-apps-notes-cell">
-                      {editingNoteId === item.id ? (
-                        <div className="job-apps-note-edit-box">
-                          <textarea
-                            className="job-apps-note-textarea"
-                            placeholder="Add candidate notes (interview remarks, status)..."
-                            value={noteDraft}
-                            onChange={(e) => setNoteDraft(e.target.value)}
-                            rows={2}
-                            autoFocus
-                          />
-                          <div className="job-apps-note-edit-actions">
-                            <button
-                              type="button"
-                              className="job-apps-note-btn save"
-                              onClick={() => handleSaveNote(item)}
-                              disabled={savingNoteId === item.id}
-                              title="Save note"
-                            >
-                              <Check size={13} strokeWidth={2.5} />
-                              <span>{savingNoteId === item.id ? 'Saving...' : 'Save'}</span>
-                            </button>
-                            <button
-                              type="button"
-                              className="job-apps-note-btn cancel"
-                              onClick={handleCancelNote}
-                              title="Cancel"
-                            >
-                              <X size={13} strokeWidth={2.5} />
-                              <span>Cancel</span>
-                            </button>
-                          </div>
-                        </div>
-                      ) : item.notes ? (
-                        <div className="job-apps-note-view-box">
-                          <div
-                            className="job-apps-note-text"
-                            onClick={() => handleOpenViewNote(item)}
-                            title="Click to view full note"
-                          >
-                            {item.notes}
-                          </div>
-                          <div className="job-apps-note-actions">
-                            <button
-                              type="button"
-                              className="job-apps-note-action-btn view"
-                              onClick={() => handleOpenViewNote(item)}
-                              title="View full note"
-                            >
-                              <Eye size={12} strokeWidth={2} />
-                              <span>View</span>
-                            </button>
-                            <button
-                              type="button"
-                              className="job-apps-note-action-btn edit"
-                              onClick={() => handleStartEditNote(item)}
-                              title="Edit note"
-                            >
-                              <Pencil size={12} strokeWidth={2} />
-                              <span>Edit</span>
-                            </button>
-                          </div>
-                        </div>
+                      {item.notes ? (
+                        <button
+                          type="button"
+                          className="job-apps-note-preview-btn"
+                          onClick={() => handleOpenNoteModal(item, false)}
+                          title="Click to view/edit note"
+                        >
+                          <FileText size={13} strokeWidth={2} />
+                          <span className="job-apps-note-preview-text">{item.notes}</span>
+                        </button>
                       ) : (
                         <button
                           type="button"
                           className="job-apps-add-note-btn"
-                          onClick={() => handleStartEditNote(item)}
+                          onClick={() => handleOpenNoteModal(item, true)}
                           title="Add candidate note"
                         >
                           <Plus size={13} strokeWidth={2} />
@@ -648,36 +598,36 @@ const JobApplications = ({
         )}
       </div>
 
-      {/* Full Note View / Modal */}
-      {viewingNoteApplicant && (
+      {/* Notes Popup Modal */}
+      {noteModalApplicant && (
         <div
           className="contact-view-overlay"
-          onClick={() => setViewingNoteApplicant(null)}
+          onClick={handleCloseNoteModal}
           role="presentation"
         >
           <div
             className="contact-view-modal job-apps-note-modal"
             role="dialog"
             aria-modal="true"
-            aria-labelledby="note-view-title"
+            aria-labelledby="note-modal-title"
             onClick={(e) => e.stopPropagation()}
           >
             <div className="contact-view-header">
               <div className="contact-view-header-main">
-                <span className={`job-apps-avatar ${viewingNoteApplicant.is_marked ? 'marked' : ''}`}>
-                  {(viewingNoteApplicant.name || 'A').charAt(0).toUpperCase()}
+                <span className={`job-apps-avatar ${noteModalApplicant.is_marked ? 'marked' : ''}`}>
+                  {(noteModalApplicant.name || 'A').charAt(0).toUpperCase()}
                 </span>
                 <div>
-                  <h3 id="note-view-title" className="contact-view-title">
-                    {viewingNoteApplicant.name}
+                  <h3 id="note-modal-title" className="contact-view-title">
+                    {noteModalApplicant.name}
                   </h3>
-                  <p className="contact-view-subtitle">{viewingNoteApplicant.job_title}</p>
+                  <p className="contact-view-subtitle">{noteModalApplicant.job_title}</p>
                 </div>
               </div>
               <button
                 type="button"
                 className="contact-view-close"
-                onClick={() => setViewingNoteApplicant(null)}
+                onClick={handleCloseNoteModal}
                 aria-label="Close"
               >
                 <X size={18} strokeWidth={2} />
@@ -686,33 +636,73 @@ const JobApplications = ({
 
             <div className="contact-view-body">
               <div className="job-apps-note-modal-content">
-                <span className="contact-view-label">Candidate Notes</span>
-                <div className="job-apps-note-modal-text">
-                  {viewingNoteApplicant.notes}
+                <div className="job-apps-note-modal-label-row">
+                  <span className="contact-view-label">Candidate Notes</span>
+                  {!noteModalEditing && (
+                    <button
+                      type="button"
+                      className="job-apps-note-action-btn edit"
+                      onClick={() => {
+                        setNoteDraft(noteModalApplicant.notes || '');
+                        setNoteModalEditing(true);
+                      }}
+                      title="Edit note"
+                    >
+                      <Pencil size={12} strokeWidth={2} />
+                      <span>Edit</span>
+                    </button>
+                  )}
                 </div>
+
+                {noteModalEditing ? (
+                  <textarea
+                    className="job-apps-note-modal-textarea"
+                    placeholder="Add candidate notes (interview remarks, status, feedback)..."
+                    value={noteDraft}
+                    onChange={(e) => setNoteDraft(e.target.value)}
+                    rows={5}
+                    autoFocus
+                  />
+                ) : (
+                  <div className="job-apps-note-modal-text">
+                    {noteModalApplicant.notes || <span className="job-apps-note-empty">No notes added yet.</span>}
+                  </div>
+                )}
               </div>
             </div>
 
             <div className="contact-view-footer">
-              <button
-                type="button"
-                className="contact-view-action primary"
-                onClick={() => {
-                  const applicant = viewingNoteApplicant;
-                  setViewingNoteApplicant(null);
-                  handleStartEditNote(applicant);
-                }}
-              >
-                <Pencil size={15} strokeWidth={2} />
-                Edit Note
-              </button>
-              <button
-                type="button"
-                className="contact-view-action ghost"
-                onClick={() => setViewingNoteApplicant(null)}
-              >
-                Close
-              </button>
+              {noteModalEditing ? (
+                <>
+                  <button
+                    type="button"
+                    className="contact-view-action primary"
+                    onClick={handleSaveNote}
+                    disabled={savingNoteId === noteModalApplicant.id}
+                  >
+                    <Check size={15} strokeWidth={2} />
+                    {savingNoteId === noteModalApplicant.id ? 'Saving...' : 'Save Note'}
+                  </button>
+                  <button
+                    type="button"
+                    className="contact-view-action ghost"
+                    onClick={() => {
+                      setNoteModalEditing(false);
+                      setNoteDraft(noteModalApplicant.notes || '');
+                    }}
+                  >
+                    Cancel
+                  </button>
+                </>
+              ) : (
+                <button
+                  type="button"
+                  className="contact-view-action ghost"
+                  onClick={handleCloseNoteModal}
+                >
+                  Close
+                </button>
+              )}
             </div>
           </div>
         </div>
