@@ -15,6 +15,7 @@ import {
   Plus,
   RotateCcw,
   Trash2,
+  UserCheck,
   X,
 } from 'lucide-react';
 
@@ -58,6 +59,7 @@ const JobApplications = ({
   onSoftDelete,
   onRestore,
   onToggleMarked,
+  onToggleSelected,
   onUpdateNotes,
 }) => {
   const [downloadingId, setDownloadingId] = useState(null);
@@ -121,10 +123,12 @@ const JobApplications = ({
 
   const stats = useMemo(() => {
     const withResume = activeApplications.filter((a) => a.resume_path).length;
+    const selected = activeApplications.filter((a) => a.is_selected).length;
     const marked = activeApplications.filter((a) => a.is_marked).length;
     return {
       total: activeApplications.length,
       today: todayApplications.length,
+      selected,
       withResume,
       marked,
       deleted: deletedApplications.length,
@@ -144,12 +148,14 @@ const JobApplications = ({
   const filtered = useMemo(() => {
     let list = sourceList;
     if (filter === 'new') list = list.filter((a) => isToday(a.created_at));
+    if (filter === 'selected') list = list.filter((a) => a.is_selected);
     if (filter === 'marked') list = list.filter((a) => a.is_marked);
     if (titleFilter !== 'all') list = list.filter((a) => a.job_title === titleFilter);
 
-    // Marked applications stay on top within the current list
+    // Selected and Marked applications stay on top within the current list
     return [...list].sort((a, b) => {
       if (filter === 'deleted') return 0;
+      if (!!b.is_selected !== !!a.is_selected) return b.is_selected ? 1 : -1;
       if (!!b.is_marked !== !!a.is_marked) return b.is_marked ? 1 : -1;
       return 0;
     });
@@ -225,6 +231,25 @@ const JobApplications = ({
     }
   };
 
+  const handleToggleSelected = async (application) => {
+    if (!onToggleSelected) return;
+    setActionId(application.id);
+    setLocalError('');
+    setLocalSuccess('');
+    try {
+      await onToggleSelected(application);
+      setLocalSuccess(
+        application.is_selected
+          ? 'Application removed from Selected.'
+          : 'Application marked as Selected.'
+      );
+    } catch (err) {
+      setLocalError(err.message || 'Failed to update selected status.');
+    } finally {
+      setActionId(null);
+    }
+  };
+
   const handleOpenNoteModal = (application, startInEdit = false) => {
     setNoteModalApplicant(application);
     setNoteDraft(application.notes || '');
@@ -264,6 +289,7 @@ const JobApplications = ({
 
   const getRowClassName = (item) => {
     if (filter === 'deleted') return 'job-apps-row-deleted';
+    if (item.is_selected) return 'job-apps-row-selected';
     if (item.is_marked) return 'job-apps-row-marked';
     if (!item.is_read) return 'job-apps-row-new';
     return '';
@@ -280,6 +306,10 @@ const JobApplications = ({
           <div className="job-apps-stat new">
             <span className="job-apps-stat-value">{stats.today}</span>
             <span className="job-apps-stat-label">Today</span>
+          </div>
+          <div className="job-apps-stat selected">
+            <span className="job-apps-stat-value">{stats.selected}</span>
+            <span className="job-apps-stat-label">Selected</span>
           </div>
           <div className="job-apps-stat marked">
             <span className="job-apps-stat-value">{stats.marked}</span>
@@ -318,6 +348,7 @@ const JobApplications = ({
             {[
               { key: 'all', label: 'All' },
               { key: 'new', label: 'Today' },
+              { key: 'selected', label: 'Selected' },
               { key: 'marked', label: 'Marked' },
               { key: 'deleted', label: 'Deleted' },
             ].map(({ key, label }) => (
@@ -333,6 +364,9 @@ const JobApplications = ({
                 {label}
                 {key === 'new' && stats.today > 0 && (
                   <span className="job-apps-filter-count">{stats.today}</span>
+                )}
+                {key === 'selected' && stats.selected > 0 && (
+                  <span className="job-apps-filter-count selected">{stats.selected}</span>
                 )}
                 {key === 'marked' && stats.marked > 0 && (
                   <span className="job-apps-filter-count marked">{stats.marked}</span>
@@ -419,12 +453,15 @@ const JobApplications = ({
                   <tr key={item.id} className={getRowClassName(item)}>
                     <td className="job-apps-td-applicant">
                       <div className="job-apps-applicant">
-                        <span className={`job-apps-avatar ${item.is_marked ? 'marked' : ''}`}>
+                        <span className={`job-apps-avatar ${item.is_selected ? 'selected' : item.is_marked ? 'marked' : ''}`}>
                           {(item.name || 'A').charAt(0).toUpperCase()}
                         </span>
                         <div className="job-apps-applicant-info">
                           <strong>
                             {item.name}
+                            {item.is_selected && (
+                              <span className="job-apps-selected-badge">Selected</span>
+                            )}
                             {item.is_marked && (
                               <span className="job-apps-marked-badge">Marked</span>
                             )}
@@ -520,27 +557,51 @@ const JobApplications = ({
                               onClick={(e) => e.stopPropagation()}
                             >
                               {filter !== 'deleted' && (
-                                <button
-                                  type="button"
-                                  className={`job-apps-dropdown-item ${item.is_marked ? 'active' : ''}`}
-                                  onClick={() => {
-                                    setOpenDropdownId(null);
-                                    handleToggleMarked(item);
-                                  }}
-                                  disabled={actionId === item.id}
-                                >
-                                  {item.is_marked ? (
-                                    <>
-                                      <BookmarkCheck size={15} strokeWidth={2} className="marked" />
-                                      <span>Marked</span>
-                                    </>
-                                  ) : (
-                                    <>
-                                      <Bookmark size={15} strokeWidth={2} />
-                                      <span>Mark</span>
-                                    </>
-                                  )}
-                                </button>
+                                <>
+                                  <button
+                                    type="button"
+                                    className={`job-apps-dropdown-item select-item ${item.is_selected ? 'selected-active' : ''}`}
+                                    onClick={() => {
+                                      setOpenDropdownId(null);
+                                      handleToggleSelected(item);
+                                    }}
+                                    disabled={actionId === item.id}
+                                  >
+                                    {item.is_selected ? (
+                                      <>
+                                        <UserCheck size={15} strokeWidth={2} className="selected" />
+                                        <span>Selected</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <UserCheck size={15} strokeWidth={2} />
+                                        <span>Select</span>
+                                      </>
+                                    )}
+                                  </button>
+
+                                  <button
+                                    type="button"
+                                    className={`job-apps-dropdown-item ${item.is_marked ? 'active' : ''}`}
+                                    onClick={() => {
+                                      setOpenDropdownId(null);
+                                      handleToggleMarked(item);
+                                    }}
+                                    disabled={actionId === item.id}
+                                  >
+                                    {item.is_marked ? (
+                                      <>
+                                        <BookmarkCheck size={15} strokeWidth={2} className="marked" />
+                                        <span>Marked</span>
+                                      </>
+                                    ) : (
+                                      <>
+                                        <Bookmark size={15} strokeWidth={2} />
+                                        <span>Mark</span>
+                                      </>
+                                    )}
+                                  </button>
+                                </>
                               )}
 
                               <button

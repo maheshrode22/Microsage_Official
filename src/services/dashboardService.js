@@ -68,6 +68,17 @@ export const toggleJobApplicationMarked = async (id, isMarked) => {
   }
 };
 
+export const toggleJobApplicationSelected = async (id, isSelected) => {
+  const { error } = await supabase
+    .from('job_applications')
+    .update({ is_selected: isSelected })
+    .eq('id', id);
+
+  if (error) {
+    throw new Error(error.message || 'Failed to update selected status.');
+  }
+};
+
 export const getResumeDownloadUrl = async (resumePath) => {
   const { data, error } = await supabase.storage
     .from(RESUMES_BUCKET)

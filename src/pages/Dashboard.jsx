@@ -15,9 +15,30 @@ import {
   restoreJobApplication,
   softDeleteJobApplication,
   toggleJobApplicationMarked,
+  toggleJobApplicationSelected,
   updateJobApplicationNotes,
 } from '../services/dashboardService';
 import '../styles/components/Dashboard.css';
+
+const getStoredSelected = (id) => {
+  try {
+    return localStorage.getItem(`ms_job_app_selected_${id}`) === 'true';
+  } catch {
+    return false;
+  }
+};
+
+const setStoredSelected = (id, isSelected) => {
+  try {
+    if (isSelected) {
+      localStorage.setItem(`ms_job_app_selected_${id}`, 'true');
+    } else {
+      localStorage.removeItem(`ms_job_app_selected_${id}`);
+    }
+  } catch {
+    // Ignore storage quota errors
+  }
+};
 
 const getStoredNote = (id) => {
   try {
@@ -75,11 +96,13 @@ const Dashboard = () => {
       ]);
       const activeJobs = (allJobs || []).map((job) => ({
         ...job,
+        is_selected: job.is_selected ?? getStoredSelected(job.id),
         notes: job.notes ?? getStoredNote(job.id),
       })).filter((job) => !job.deleted_at);
 
       const deletedJobs = (allJobs || []).map((job) => ({
         ...job,
+        is_selected: job.is_selected ?? getStoredSelected(job.id),
         notes: job.notes ?? getStoredNote(job.id),
       })).filter((job) => job.deleted_at);
 
@@ -164,6 +187,26 @@ const Dashboard = () => {
         job.id === application.id ? { ...job, is_marked: nextMarked } : job
       )
     );
+  };
+
+  const handleToggleSelectedApplication = async (application) => {
+    const nextSelected = !application.is_selected;
+    setStoredSelected(application.id, nextSelected);
+    setJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === application.id ? { ...job, is_selected: nextSelected } : job
+      )
+    );
+    setDeletedJobApplications((prev) =>
+      prev.map((job) =>
+        job.id === application.id ? { ...job, is_selected: nextSelected } : job
+      )
+    );
+    try {
+      await toggleJobApplicationSelected(application.id, nextSelected);
+    } catch (err) {
+      console.warn('Selected status saved to local cache:', err.message);
+    }
   };
 
   const handleUpdateNotesApplication = async (applicationId, notes) => {
@@ -307,6 +350,7 @@ const Dashboard = () => {
           onSoftDelete={handleSoftDeleteApplication}
           onRestore={handleRestoreApplication}
           onToggleMarked={handleToggleMarkedApplication}
+          onToggleSelected={handleToggleSelectedApplication}
           onUpdateNotes={handleUpdateNotesApplication}
         />
       );
