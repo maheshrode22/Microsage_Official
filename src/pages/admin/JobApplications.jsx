@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Alert, Form, Spinner } from 'react-bootstrap';
+import { Alert, Form } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
 import {
   Bookmark,
   BookmarkCheck,
@@ -300,27 +301,39 @@ const JobApplications = ({
       <div className="job-apps-toolbar">
         <div className="job-apps-stats">
           <div className="job-apps-stat">
-            <span className="job-apps-stat-value">{stats.total}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.total}
+            </span>
             <span className="job-apps-stat-label">Total</span>
           </div>
           <div className="job-apps-stat new">
-            <span className="job-apps-stat-value">{stats.today}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.today}
+            </span>
             <span className="job-apps-stat-label">Today</span>
           </div>
           <div className="job-apps-stat selected">
-            <span className="job-apps-stat-value">{stats.selected}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.selected}
+            </span>
             <span className="job-apps-stat-label">Selected</span>
           </div>
           <div className="job-apps-stat marked">
-            <span className="job-apps-stat-value">{stats.marked}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.marked}
+            </span>
             <span className="job-apps-stat-label">Marked</span>
           </div>
           <div className="job-apps-stat resume">
-            <span className="job-apps-stat-value">{stats.withResume}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.withResume}
+            </span>
             <span className="job-apps-stat-label">Resumes</span>
           </div>
           <div className="job-apps-stat deleted">
-            <span className="job-apps-stat-value">{stats.deleted}</span>
+            <span className="job-apps-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.deleted}
+            </span>
             <span className="job-apps-stat-label">Deleted</span>
           </div>
         </div>
@@ -396,8 +409,54 @@ const JobApplications = ({
 
       <div className="job-apps-table-card">
         {loading ? (
-          <div className="dashboard-loading">
-            <Spinner animation="border" role="status" />
+          <div className="table-responsive">
+            <table className="job-apps-table">
+              <thead>
+                <tr>
+                  <th className="job-apps-th-applicant">Applicant</th>
+                  <th className="job-apps-th-position">Position</th>
+                  <th className="job-apps-th-contact">Contact</th>
+                  <th className="job-apps-th-applied">Applied</th>
+                  <th className="job-apps-th-notes">Notes</th>
+                  <th className="job-apps-th-actions text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <tr key={i}>
+                    <td className="job-apps-td-applicant">
+                      <div className="job-apps-applicant">
+                        <Skeleton circle width={28} height={28} />
+                        <div className="job-apps-applicant-info" style={{ flex: 1 }}>
+                          <Skeleton width={120} height={14} className="mb-1" />
+                          <Skeleton width={90} height={11} />
+                        </div>
+                      </div>
+                    </td>
+                    <td className="job-apps-td-position">
+                      <Skeleton width={130} height={14} />
+                    </td>
+                    <td className="job-apps-td-contact">
+                      <div className="job-apps-contact">
+                        <Skeleton width={140} height={14} className="mb-1" />
+                        <Skeleton width={95} height={12} />
+                      </div>
+                    </td>
+                    <td className="job-apps-td-applied">
+                      <Skeleton width={75} height={14} />
+                    </td>
+                    <td className="job-apps-notes-cell">
+                      <Skeleton width={70} height={22} borderRadius={4} />
+                    </td>
+                    <td className="text-end">
+                      <div className="d-inline-flex gap-2">
+                        <Skeleton width={70} height={28} borderRadius={6} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ) : sourceList.length === 0 ? (
           <div className="job-apps-empty">

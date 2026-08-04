@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Alert, Spinner } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
 import {
   Calendar,
   Eye,
@@ -61,15 +62,21 @@ const ContactSubmissions = ({ submissions = [], loading = false, error = '' }) =
       <div className="contact-subs-toolbar">
         <div className="contact-subs-stats">
           <div className="contact-subs-stat">
-            <span className="contact-subs-stat-value">{stats.total}</span>
+            <span className="contact-subs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.total}
+            </span>
             <span className="contact-subs-stat-label">Total</span>
           </div>
           <div className="contact-subs-stat week">
-            <span className="contact-subs-stat-value">{stats.thisWeek}</span>
+            <span className="contact-subs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.thisWeek}
+            </span>
             <span className="contact-subs-stat-label">This Week</span>
           </div>
           <div className="contact-subs-stat phone">
-            <span className="contact-subs-stat-value">{stats.withPhone}</span>
+            <span className="contact-subs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.withPhone}
+            </span>
             <span className="contact-subs-stat-label">With Phone</span>
           </div>
         </div>
@@ -79,8 +86,47 @@ const ContactSubmissions = ({ submissions = [], loading = false, error = '' }) =
 
       <div className="contact-subs-table-card">
         {loading ? (
-          <div className="dashboard-loading">
-            <Spinner animation="border" role="status" />
+          <div className="table-responsive">
+            <table className="contact-subs-table">
+              <thead>
+                <tr>
+                  <th>Sender</th>
+                  <th>Contact</th>
+                  <th>Message</th>
+                  <th>Received</th>
+                  <th className="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <tr key={i}>
+                    <td>
+                      <div className="contact-subs-sender">
+                        <Skeleton circle width={28} height={28} />
+                        <Skeleton width={110} height={16} />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="contact-subs-contact">
+                        <Skeleton width={140} height={14} className="mb-1" />
+                        <Skeleton width={90} height={12} />
+                      </div>
+                    </td>
+                    <td>
+                      <Skeleton width="90%" height={14} />
+                    </td>
+                    <td>
+                      <Skeleton width={75} height={14} />
+                    </td>
+                    <td>
+                      <div className="contact-subs-actions">
+                        <Skeleton width={65} height={28} borderRadius={6} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ) : submissions.length === 0 ? (
           <div className="contact-subs-empty">

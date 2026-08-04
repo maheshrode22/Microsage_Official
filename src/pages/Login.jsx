@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Alert, Button, Form } from 'react-bootstrap';
 import { Link, useNavigate } from 'react-router-dom';
 import { Check } from 'lucide-react';
+import Skeleton from 'react-loading-skeleton';
 import Logo from '../components/layout/Logo';
 import { useAuth } from '../context/AuthContext';
 import '../styles/components/Login.css';
@@ -56,9 +57,68 @@ const Login = () => {
 
   if (loading) {
     return (
-      <div className="admin-loading-screen">
-        <div className="spinner-border text-primary" role="status">
-          <span className="visually-hidden">Loading...</span>
+      <div className="login-page">
+        <div className="login-brand-panel">
+          <div className="login-brand-content">
+            <Logo height={44} variant="light" />
+            <span className="login-brand-badge">Secure Admin Portal</span>
+            <h1 className="login-brand-title">
+              Manage your business submissions with confidence
+            </h1>
+            <p className="login-brand-text">
+              Access contact enquiries and job applications from one professional
+              dashboard built for Microsage Private Limited.
+            </p>
+            <ul className="login-brand-features">
+              <li><Check size={15} strokeWidth={2.5} className="login-feature-icon" />Contact form submissions</li>
+              <li><Check size={15} strokeWidth={2.5} className="login-feature-icon" />Career &amp; job applications</li>
+              <li><Check size={15} strokeWidth={2.5} className="login-feature-icon" />Resume downloads</li>
+            </ul>
+          </div>
+          <p className="login-brand-footer">
+            &copy; {new Date().getFullYear()} Microsage Private Limited
+          </p>
+        </div>
+
+        <div className="login-form-panel">
+          <div className="login-form-wrapper">
+            <div className="login-mobile-brand">
+              <Link to="/" className="login-mobile-logo">
+                <Logo height={36} />
+              </Link>
+            </div>
+
+            <div className="login-form-header">
+              <h2><Skeleton width={180} /></h2>
+              <p><Skeleton width={260} /></p>
+            </div>
+
+            <div className="login-form">
+              <div className="login-field">
+                <Skeleton width={100} height={14} className="mb-2" />
+                <Skeleton height={44} borderRadius={8} />
+              </div>
+
+              <div className="login-field mt-3">
+                <Skeleton width={80} height={14} className="mb-2" />
+                <Skeleton height={44} borderRadius={8} />
+              </div>
+
+              <div className="login-robot-check mt-3">
+                <Skeleton width={140} height={20} />
+              </div>
+
+              <div className="mt-3">
+                <Skeleton height={46} borderRadius={8} />
+              </div>
+            </div>
+
+            <div className="login-form-footer">
+              <Link to="/" className="login-back-link">
+                &larr; Return to website
+              </Link>
+            </div>
+          </div>
         </div>
       </div>
     );

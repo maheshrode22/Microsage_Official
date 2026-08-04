@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { Alert, Button, Form, Spinner } from 'react-bootstrap';
+import { Alert, Button, Form } from 'react-bootstrap';
+import Skeleton from 'react-loading-skeleton';
 import {
   ArrowLeft,
   Briefcase,
@@ -455,15 +456,21 @@ const ManageJobs = ({ onCountChange }) => {
       <div className="manage-jobs-toolbar">
         <div className="manage-jobs-stats">
           <div className="manage-jobs-stat">
-            <span className="manage-jobs-stat-value">{stats.total}</span>
+            <span className="manage-jobs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.total}
+            </span>
             <span className="manage-jobs-stat-label">Total Jobs</span>
           </div>
           <div className="manage-jobs-stat published">
-            <span className="manage-jobs-stat-value">{stats.published}</span>
+            <span className="manage-jobs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.published}
+            </span>
             <span className="manage-jobs-stat-label">Published</span>
           </div>
           <div className="manage-jobs-stat draft">
-            <span className="manage-jobs-stat-value">{stats.draft}</span>
+            <span className="manage-jobs-stat-value">
+              {loading ? <Skeleton width={28} /> : stats.draft}
+            </span>
             <span className="manage-jobs-stat-label">Drafts</span>
           </div>
         </div>
@@ -497,8 +504,50 @@ const ManageJobs = ({ onCountChange }) => {
 
       <div className="manage-jobs-table-card">
         {loading ? (
-          <div className="dashboard-loading">
-            <Spinner animation="border" role="status" />
+          <div className="table-responsive">
+            <table className="manage-jobs-table">
+              <thead>
+                <tr>
+                  <th>Job Title</th>
+                  <th>Location</th>
+                  <th>Type</th>
+                  <th>Status</th>
+                  <th className="text-end">Actions</th>
+                </tr>
+              </thead>
+              <tbody>
+                {[1, 2, 3, 4, 5].map((i) => (
+                  <tr key={i}>
+                    <td>
+                      <div className="manage-jobs-title-cell">
+                        <Skeleton width={160} height={16} className="mb-1" />
+                        <Skeleton width={100} height={12} />
+                      </div>
+                    </td>
+                    <td>
+                      <Skeleton width={90} height={14} />
+                    </td>
+                    <td>
+                      <Skeleton width={70} height={14} />
+                    </td>
+                    <td>
+                      <div className="manage-jobs-badges">
+                        <Skeleton width={65} height={20} borderRadius={12} />
+                        <Skeleton width={55} height={20} borderRadius={12} />
+                      </div>
+                    </td>
+                    <td>
+                      <div className="d-flex justify-content-end gap-1">
+                        <Skeleton width={32} height={32} borderRadius={6} />
+                        <Skeleton width={32} height={32} borderRadius={6} />
+                        <Skeleton width={32} height={32} borderRadius={6} />
+                        <Skeleton width={32} height={32} borderRadius={6} />
+                      </div>
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
           </div>
         ) : jobs.length === 0 ? (
           <div className="manage-jobs-empty">

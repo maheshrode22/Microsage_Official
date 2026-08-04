@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Button, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Button } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
 import { MapPin } from 'lucide-react';
+import Skeleton from 'react-loading-skeleton';
 import { fetchPublishedJobs } from '../services/jobService';
 import '../styles/components/Career.css';
 
@@ -51,9 +52,36 @@ const Career = () => {
         )}
 
         {loading ? (
-          <div className="career-loading">
-            <Spinner animation="border" role="status" />
-          </div>
+          <Row className="mt-4">
+            {[1, 2, 3].map((i) => (
+              <Col lg={4} md={6} className="mb-4" key={i}>
+                <div className="career-card">
+                  <div className="career-card-header">
+                    <Skeleton width={80} height={22} borderRadius={12} />
+                  </div>
+                  <h4 className="career-title">
+                    <Skeleton width="85%" height={24} />
+                  </h4>
+                  <p className="career-meta d-flex align-items-center gap-1">
+                    <Skeleton width={110} height={16} />
+                  </p>
+                  <div className="career-focus mb-3">
+                    <Skeleton count={2} height={14} />
+                  </div>
+                  <div className="career-skills-preview">
+                    <div className="d-flex gap-2">
+                      <Skeleton width={60} height={24} borderRadius={12} />
+                      <Skeleton width={70} height={24} borderRadius={12} />
+                      <Skeleton width={55} height={24} borderRadius={12} />
+                    </div>
+                  </div>
+                  <div className="career-card-footer">
+                    <Skeleton height={38} borderRadius={50} />
+                  </div>
+                </div>
+              </Col>
+            ))}
+          </Row>
         ) : (
           <Row className="mt-4">
             {jobs.length === 0 ? (

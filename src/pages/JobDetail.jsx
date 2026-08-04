@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Container, Row, Col, Form, Alert, Spinner } from 'react-bootstrap';
+import { Container, Row, Col, Form, Alert } from 'react-bootstrap';
 import { useParams, Link } from 'react-router-dom';
+import Skeleton from 'react-loading-skeleton';
 import {
   ArrowLeft,
   Briefcase,
@@ -73,7 +74,6 @@ const JobDetail = () => {
     }
     setSubmitStatus(null);
     setIsSubmitting(true);
-
     try {
       await submitJobApplication({
         jobId: job.slug,
@@ -111,8 +111,96 @@ const JobDetail = () => {
   if (loading) {
     return (
       <section className="career-section section-padding">
-        <Container fluid className="px-4 px-lg-5 text-center">
-          <Spinner animation="border" role="status" />
+        <Container fluid className="px-4 px-lg-5">
+          <Row className="justify-content-center">
+            <Col lg={8}>
+              <div className="mb-4">
+                <Skeleton width={110} height={18} />
+              </div>
+
+              <div className="job-detail-header">
+                <div className="job-header-top mb-2">
+                  <Skeleton width={110} height={24} borderRadius={12} />
+                </div>
+                <h1 className="job-detail-title">
+                  <Skeleton width="75%" height={36} />
+                </h1>
+                <p className="job-detail-company">
+                  <Skeleton width="45%" height={18} />
+                </p>
+                <div className="job-meta-tags d-flex gap-2 flex-wrap">
+                  <Skeleton width={110} height={28} borderRadius={20} />
+                  <Skeleton width={100} height={28} borderRadius={20} />
+                  <Skeleton width={120} height={28} borderRadius={20} />
+                  <Skeleton width={130} height={28} borderRadius={20} />
+                </div>
+              </div>
+
+              <div className="job-info-grid">
+                {[1, 2, 3, 4].map((i) => (
+                  <div key={i} className="job-info-item">
+                    <Skeleton width={70} height={12} className="mb-1" />
+                    <Skeleton width={100} height={18} />
+                  </div>
+                ))}
+              </div>
+
+              <div className="job-salary-note mb-4">
+                <Skeleton width="85%" height={18} />
+              </div>
+
+              <div className="job-section">
+                <h3 className="job-section-title">
+                  <Skeleton width={160} height={22} />
+                </h3>
+                <Skeleton count={3} height={14} className="mb-2" />
+              </div>
+
+              <div className="job-section">
+                <h3 className="job-section-title">
+                  <Skeleton width={140} height={22} />
+                </h3>
+                <div className="d-flex gap-2 flex-wrap">
+                  {[1, 2, 3, 4, 5].map((i) => (
+                    <Skeleton key={i} width={80} height={28} borderRadius={16} />
+                  ))}
+                </div>
+              </div>
+
+              <div className="job-section">
+                <h3 className="job-section-title">
+                  <Skeleton width={180} height={22} />
+                </h3>
+                <Skeleton count={4} height={16} className="mb-2" />
+              </div>
+
+              <div className="job-section">
+                <h3 className="job-section-title">
+                  <Skeleton width={200} height={22} />
+                </h3>
+                <Skeleton count={4} height={16} className="mb-2" />
+              </div>
+            </Col>
+
+            <Col lg={4}>
+              <div className="job-sidebar">
+                <div className="job-apply-card">
+                  <h4><Skeleton width={180} height={22} /></h4>
+                  <p><Skeleton width="100%" height={16} /></p>
+                  <div className="job-apply-buttons">
+                    <Skeleton height={44} borderRadius={8} className="mb-2" />
+                    <Skeleton height={44} borderRadius={8} />
+                  </div>
+                </div>
+
+                <div className="job-contact-card mt-4">
+                  <h5><Skeleton width={140} height={20} /></h5>
+                  <div className="mb-2"><Skeleton width="80%" height={16} /></div>
+                  <div><Skeleton width="60%" height={16} /></div>
+                </div>
+              </div>
+            </Col>
+          </Row>
         </Container>
       </section>
     );

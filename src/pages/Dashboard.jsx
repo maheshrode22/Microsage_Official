@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
-import { Alert, Spinner } from 'react-bootstrap';
+import { Alert } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import { Briefcase, Inbox, Mail } from 'lucide-react';
+import Skeleton from 'react-loading-skeleton';
 import AdminLayout from '../components/layout/AdminLayout';
 import ContactSubmissions from './admin/ContactSubmissions';
 import JobApplications from './admin/JobApplications';
@@ -235,9 +236,43 @@ const Dashboard = () => {
   const renderOverview = () => {
     if (loading) {
       return (
-        <div className="dashboard-loading">
-          <Spinner animation="border" role="status" />
-        </div>
+        <>
+          <div className="dashboard-stats">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="dashboard-stat-card">
+                <Skeleton circle width={44} height={44} />
+                <div style={{ flex: 1 }}>
+                  <Skeleton width={110} height={14} className="mb-1" />
+                  <Skeleton width={60} height={28} />
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <div className="dashboard-quick-actions">
+            {[1, 2].map((i) => (
+              <div key={i} className="dashboard-action-card" style={{ cursor: 'default' }}>
+                <Skeleton width={150} height={16} className="mb-1" />
+                <Skeleton width={80} height={18} />
+              </div>
+            ))}
+          </div>
+
+          <div className="dashboard-recent-grid">
+            {[1, 2].map((i) => (
+              <div key={i} className="dashboard-card">
+                <h4 className="dashboard-card-title">
+                  <Skeleton width={180} height={20} />
+                </h4>
+                <div className="dashboard-recent-item">
+                  <Skeleton width="60%" height={16} className="mb-2" />
+                  <Skeleton count={2} height={14} className="mb-2" />
+                  <Skeleton width={130} height={12} />
+                </div>
+              </div>
+            ))}
+          </div>
+        </>
       );
     }
 
